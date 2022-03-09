@@ -1,5 +1,6 @@
 using CR.Report.Application;
 using HealthChecks.UI.Client;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,15 @@ namespace CR.Report
                 opt.SerializerSettings.Culture = System.Globalization.CultureInfo.GetCultureInfo("tr-TR");
             });
 
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cfg.UseHealthCheck(ctx);
+                });
+            });
+            services.AddMassTransitHostedService();
 
             services.AddCors();
 
