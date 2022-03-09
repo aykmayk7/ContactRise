@@ -13,7 +13,7 @@ namespace CR.Contact.Application.Services
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
 
             Contacts = database.GetCollection<ContactCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
-            ContactInfos = database.GetCollection<ContactInfosCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
+            ContactInfos = database.GetCollection<ContactInfosCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName2"));
             
         }
         public IMongoCollection<ContactCreate> Contacts { get; }

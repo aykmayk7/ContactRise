@@ -1,10 +1,13 @@
 ﻿using CR.Contact.Application.Commands.Create;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace CR.Contact.Application.Responses
 {
     public class ContactInfosResponse : BaseResponse
     {
+
         public int ContactId { get; set; }
 
         public string Key { get; set; }
@@ -13,7 +16,6 @@ namespace CR.Contact.Application.Responses
 
         public string Contents { get; set; }
 
-        public ICollection<ContactCreate> Items { get; set; }
 
     }
 }

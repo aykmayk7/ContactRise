@@ -14,7 +14,9 @@ namespace CR.Report.Application.Commands.Create
         public string Id { get; set; }
 
         public string ReportDate { get; set; }
+
         public string ReportTarget { get; set; }
+
         public ReportStatusEnum ReportStatus { get; set; }
 
      
