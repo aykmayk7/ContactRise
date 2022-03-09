@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static CR.Core.Enumerations;
 
 namespace CR.Report.Application.Services
 {
@@ -27,9 +28,9 @@ namespace CR.Report.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ReportResponse>> GetReport(ReportCreate Report)
+        public async Task<IEnumerable<ReportResponse>> GetReport(string date, ReportStatusEnum reportStatusEnum)
         {
-            await _context.Reports.Find(p => p.ReportDate == Report.ReportDate && p.ReportStatus == Report.ReportStatus).ToListAsync();
+            await _context.Reports.Find(p => p.ReportDate == date && p.ReportStatus == reportStatusEnum).ToListAsync();
             throw new NotImplementedException();
         }
 

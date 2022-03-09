@@ -11,20 +11,17 @@ namespace CR.Contact.Application.Commands.Create
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id
-        {
-            get
-            {
-                return (Id == null || Id == "" ? ObjectId.GenerateNewId().ToString() : Id);
-            }
-
-            set => Id = ObjectId.GenerateNewId().ToString();
-        }
-
+       
         public string Name { get; set; }
 
         public string Surname { get; set; }
 
         public string Company { get; set; }
+
+        public string Id { get; set; }
+        public ContactCreate()
+        {
+            this.Id = ObjectId.GenerateNewId().ToString();
+        }
     }
 }

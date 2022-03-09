@@ -23,7 +23,7 @@ namespace CR.Report.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
 
 
-            //services.AddScoped<IContactContext, ContactContext>();
+            services.AddScoped<IReportContext, ReportContext>();
             services.AddScoped<IReportService, ReportService>();
 
             #region Configure Mapper

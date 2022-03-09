@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CR.Report.Application.Commands.Create;
+using CR.Report.Application.Responses;
 
 namespace CR.Report.Application.Mappers
 {
@@ -11,6 +8,8 @@ namespace CR.Report.Application.Mappers
     {
         public MappingProfile()
         {
+            CreateMap<ReportCreate, ReportCreate>().ReverseMap();
+            CreateMap<ReportCreate, ReportResponse>().ReverseMap();
 
         }
     }

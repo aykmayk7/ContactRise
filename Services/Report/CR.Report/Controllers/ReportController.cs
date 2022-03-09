@@ -1,6 +1,7 @@
 ﻿using CR.Report.Application.Commands.Create;
 using CR.Report.Application.Queries.MultipleQuery;
 using CR.Report.Application.Queries.SingleQuery;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,9 +15,11 @@ namespace CR.Report.Controllers
     public class ReportController : BaseController
     {
         private readonly IMediator _mediatr;
-        public ReportController(IMediator mediatr)
+        private readonly IPublishEndpoint _publishEndpoint;
+        public ReportController(IMediator mediatr, IPublishEndpoint publishEndpoint)
         {
             _mediatr = mediatr;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpPost("CreateReport")]
@@ -25,6 +28,8 @@ namespace CR.Report.Controllers
             var result = await _mediatr.Send(command);
 
             if (result == null) return NotFound(result);
+
+            await _publishEndpoint.Publish<ReportCreate>(command);
 
             return result.Success ? Success(result) : BadRequest(result);
         }
@@ -43,7 +48,7 @@ namespace CR.Report.Controllers
         }
 
         [HttpGet("GetReportInfos")]
-        public async Task<IActionResult> GetReport(DateTime date, ReportStatusEnum reportStatusEnum)
+        public async Task<IActionResult> GetReport(string date, ReportStatusEnum reportStatusEnum)
         {
             var query = new ReportQuery(date, reportStatusEnum);
 
