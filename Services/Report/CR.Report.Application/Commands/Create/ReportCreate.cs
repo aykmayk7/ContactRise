@@ -11,12 +11,13 @@ namespace CR.Report.Application.Commands.Create
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-     
+        public string Id { get; set; }
+
         public string ReportDate { get; set; }
         public string ReportTarget { get; set; }
         public ReportStatusEnum ReportStatus { get; set; }
-       
-        public string Id { get; set; }
+
+     
         public ReportCreate()
         {
             this.Id = ObjectId.GenerateNewId().ToString();

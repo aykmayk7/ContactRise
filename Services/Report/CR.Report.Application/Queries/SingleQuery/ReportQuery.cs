@@ -5,5 +5,5 @@ using static CR.Core.Enumerations;
 
 namespace CR.Report.Application.Queries.SingleQuery
 {
-    public record ReportQuery(string date, ReportStatusEnum reportStatusEnum) : IRequest<ApiResponse<ReportResponse>>;
+    public record ReportQuery(string date) : IRequest<ApiResponse<ReportResponse>>;
 }

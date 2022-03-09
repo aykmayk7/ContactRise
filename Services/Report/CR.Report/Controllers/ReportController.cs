@@ -48,9 +48,9 @@ namespace CR.Report.Controllers
         }
 
         [HttpGet("GetReportInfos")]
-        public async Task<IActionResult> GetReport(string date, ReportStatusEnum reportStatusEnum)
+        public async Task<IActionResult> GetReport(string date)
         {
-            var query = new ReportQuery(date, reportStatusEnum);
+            var query = new ReportQuery(date);
 
             var result = await _mediatr.Send(query);
 

@@ -28,10 +28,10 @@ namespace CR.Report.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ReportResponse>> GetReport(string date, ReportStatusEnum reportStatusEnum)
+        public async Task<ReportCreate> GetReport(string date)
         {
-            await _context.Reports.Find(p => p.ReportDate == date && p.ReportStatus == reportStatusEnum).ToListAsync();
-            throw new NotImplementedException();
+            return await _context.Reports.Find(p => p.ReportDate == date).FirstOrDefaultAsync();
+           
         }
 
 

@@ -1,7 +1,7 @@
 ﻿using CR.Core.Responses;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CR.Contact.Controllers
+namespace Report.Aggregator.Controllers
 {
     public class BaseController : ControllerBase
     {
