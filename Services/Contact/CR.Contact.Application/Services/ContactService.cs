@@ -15,19 +15,17 @@ namespace CR.Contact.Application.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<ContactCreate> CreateContact(ContactCreate Contact)
+        public async Task CreateContact(ContactCreate Contact)
         {
             await _context.Contacts.InsertOneAsync(Contact);
-            throw new NotImplementedException();
         }
 
-        public async Task<ContactInfosCreate> CreateContactInfo(ContactInfosCreate ContactInfos)
+        public async Task CreateContactInfo(ContactInfosCreate ContactInfos)
         {
             await _context.ContactInfos.InsertOneAsync(ContactInfos);
-            throw new NotImplementedException();
         }
 
-        public async Task<bool> DeleteContact(string id)
+        public async Task<bool> DeleteContact(Guid id)
         {
             FilterDefinition<ContactCreate> filter = Builders<ContactCreate>.Filter.Eq(p => p.Id, id);
 
@@ -35,13 +33,13 @@ namespace CR.Contact.Application.Services
 
             return deleteResult.IsAcknowledged
                 && deleteResult.DeletedCount > 0;
-            throw new NotImplementedException();
+
         }
 
-        public async Task<bool> DeleteContactInfo(string id, string key)
+        public async Task<bool> DeleteContactInfo(string contactId, string key)
         {
             FilterDefinition<ContactInfosCreate> filter = Builders<ContactInfosCreate>.Filter.And(
-                Builders<ContactInfosCreate>.Filter.Eq(p => p.ContactId.ToString(), id),
+                Builders<ContactInfosCreate>.Filter.Eq(p => p.ContactId, contactId),
                 Builders<ContactInfosCreate>.Filter.Eq(p => p.Key.ToString(), key));
 
             DeleteResult deleteResult = await _context.ContactInfos.DeleteOneAsync(filter);
@@ -49,19 +47,25 @@ namespace CR.Contact.Application.Services
             return deleteResult.IsAcknowledged
                 && deleteResult.DeletedCount > 0;
 
-            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<ContactCreate>> GetAllContacts()
         {
             return await _context.Contacts.Find(p => true).ToListAsync();
-            throw new NotImplementedException();
         }
 
-        public async Task<ContactInfosCreate> GetContactWithInfo(string id)
+        public async Task<ContactWithInfoCreate> GetContactWithInfo(Guid id)
         {
-            return await _context.ContactInfos.Find(p => p.Id == id).FirstOrDefaultAsync();
-            throw new NotImplementedException();
+            return await _context.ContactWithInfo.Find(p => p.Id == id).FirstOrDefaultAsync();
+        }
+        public async Task<ContactCreate> GetContact(Guid id)
+        {
+            return await _context.Contacts.Find(p => p.Id == id).FirstOrDefaultAsync();
+        }
+        public async Task<IEnumerable<ContactInfosCreate>> GetContactInfo(Guid contactId)
+        {
+            return await _context.ContactInfos.Find(p => p.ContactId == contactId.ToString()).ToListAsync();
         }
     }
 }
+

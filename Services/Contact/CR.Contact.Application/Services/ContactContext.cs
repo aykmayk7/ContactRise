@@ -11,13 +11,17 @@ namespace CR.Contact.Application.Services
         {
             var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
+                       
 
             Contacts = database.GetCollection<ContactCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
             ContactInfos = database.GetCollection<ContactInfosCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName2"));
+            ContactWithInfo = database.GetCollection<ContactWithInfoCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
             
         }
         public IMongoCollection<ContactCreate> Contacts { get; }
 
         public IMongoCollection<ContactInfosCreate> ContactInfos { get; }
+
+        public IMongoCollection<ContactWithInfoCreate> ContactWithInfo { get; }
     }
 }

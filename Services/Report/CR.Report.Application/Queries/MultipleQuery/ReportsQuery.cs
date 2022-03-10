@@ -8,5 +8,5 @@ using System.Linq.Expressions;
 
 namespace CR.Report.Application.Queries.MultipleQuery
 {
-    public record ReportsQuery(Expression<Func<ReportCreate, bool>> Predicate = null) : IRequest<ApiResponse<IEnumerable<ReportResponse>>>;
+    public record ReportsQuery(Expression<Func<ReportCreate, bool>> Predicate = null) : IRequest<ApiResponse<IEnumerable<ReportCreate>>>;
 }

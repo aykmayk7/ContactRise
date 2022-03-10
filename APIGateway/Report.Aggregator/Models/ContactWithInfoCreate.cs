@@ -1,10 +1,9 @@
-﻿using CR.Core.Responses;
-using MediatR;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Report.Aggregator.Models
 {
-    public class ContactCreate : IRequest<ApiResponse<ContactCreate>>
+    public class ContactWithInfoCreate
     {
         public Guid Id { get; set; }
 
@@ -13,5 +12,6 @@ namespace Report.Aggregator.Models
         public string Surname { get; set; }
 
         public string Company { get; set; }
+        public ICollection<ContactInfosCreate> ContactInfo { get; set; }
     }
 }

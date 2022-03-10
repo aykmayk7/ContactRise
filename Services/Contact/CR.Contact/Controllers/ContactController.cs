@@ -4,6 +4,7 @@ using CR.Contact.Application.Queries.MultipleQuery;
 using CR.Contact.Application.Queries.SingleQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace CR.Contact.Controllers
@@ -29,7 +30,7 @@ namespace CR.Contact.Controllers
         }
 
         [HttpDelete("DeleteContact")]
-        public async Task<IActionResult> DeleteContact(string id)
+        public async Task<IActionResult> DeleteContact(Guid id)
         {
             var query = new ContactDelete(id);
 
@@ -76,10 +77,10 @@ namespace CR.Contact.Controllers
             return result.Success ? Success(result) : BadRequest(result);
         }
 
-        [HttpGet("GetContactInfos")]
-        public async Task<IActionResult> GetContactInfos(string id)
+        [HttpGet("GetContactInfo")]
+        public async Task<IActionResult> GetContactInfos(Guid id)
         {
-            var query = new ContactInfoQuery(id);
+            var query = new ContactWithInfoQuery(id);
 
             var result = await _mediatr.Send(query);
 

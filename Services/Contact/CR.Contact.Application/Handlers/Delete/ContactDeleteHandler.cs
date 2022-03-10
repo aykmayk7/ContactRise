@@ -18,12 +18,12 @@ namespace CR.Contact.Application.Handlers.Delete
 
         public async Task<ApiResponse> Handle(ContactDelete request, CancellationToken cancellationToken)
         {
-            var mapped = await _contactService.DeleteContact(request.id);
+            var mapped = await _contactService.DeleteContact(request.Id);
 
             if (mapped == false)
                 return new ErrorApiResponse(ResultMessage.NotDeletedContact);
 
-            await _contactService.DeleteContact(request.id);
+            await _contactService.DeleteContact(request.Id);
 
             return new SuccessApiResponse();
 

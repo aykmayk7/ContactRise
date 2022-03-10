@@ -22,7 +22,7 @@ namespace CR.Contact.Application.Handlers.Select.Single
 
         public async Task<ApiResponse<ContactInfosResponse>> Handle(ContactInfoQuery request, CancellationToken cancellationToken)
         {
-            var model = await _contactService.GetContactWithInfo(request.id);
+            var model = await _contactService.GetContactWithInfo(System.Guid.Empty);
 
             var response = _mapper.Map<ContactInfosResponse>(model);
 

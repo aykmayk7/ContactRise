@@ -47,7 +47,7 @@ namespace CR.Report.Controllers
             return result.Success ? Success(result) : BadRequest(result);
         }
 
-        [HttpGet("GetReportInfos")]
+        [HttpGet("GetReport")]
         public async Task<IActionResult> GetReport(DateTime date)
         {
             var query = new ReportQuery(date);

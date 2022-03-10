@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CR.Report.Application.Handlers.Select.Multiple
 {
-    public class ReportsSelectHandler : IRequestHandler<ReportsQuery, ApiResponse<IEnumerable<ReportResponse>>>
+    public class ReportsSelectHandler : IRequestHandler<ReportsQuery, ApiResponse<IEnumerable<ReportCreate>>>
     {
         private readonly IReportService _reportService;
         private readonly IMapper _mapper;
@@ -21,13 +21,13 @@ namespace CR.Report.Application.Handlers.Select.Multiple
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse<IEnumerable<ReportResponse>>> Handle(ReportsQuery request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<IEnumerable<ReportCreate>>> Handle(ReportsQuery request, CancellationToken cancellationToken)
         {
-            IEnumerable<ReportResponse> data = await _reportService.GetAllReport();
+            IEnumerable<ReportCreate> data = await _reportService.GetAllReport();
 
-            var response = _mapper.Map<IEnumerable<ReportResponse>>(data);
+            var response = _mapper.Map<IEnumerable<ReportCreate>>(data);
 
-            return new SuccessApiResponse<IEnumerable<ReportResponse>>(response);
+            return new SuccessApiResponse<IEnumerable<ReportCreate>>(response);
         }
     }
 }

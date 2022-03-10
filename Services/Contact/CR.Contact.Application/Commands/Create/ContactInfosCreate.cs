@@ -1,14 +1,14 @@
 ﻿using CR.Contact.Application.Responses;
 using CR.Core.Responses;
 using MediatR;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace CR.Contact.Application.Commands.Create
 {
     public class ContactInfosCreate : IRequest<ApiResponse<ContactInfosResponse>>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
+
         public string ContactId { get; set; }
 
         public string Key { get; set; }

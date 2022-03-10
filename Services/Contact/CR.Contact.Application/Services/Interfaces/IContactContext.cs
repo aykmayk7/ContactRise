@@ -7,6 +7,7 @@ namespace CR.Contact.Application.Services.Interfaces
     {
         IMongoCollection<ContactCreate> Contacts { get; }
         IMongoCollection<ContactInfosCreate> ContactInfos { get; }
+        IMongoCollection<ContactWithInfoCreate> ContactWithInfo { get; }
 
     }
 }

@@ -5,10 +5,11 @@ using System.Text;
 
 namespace EventBus
 {
-    public class RabbitMQConsume<T>
+    public class RabbitMQConsume
     {
-        public void ConsumeMessage(T Model)
+        public string ConsumeMessage()
         {
+            string message = string.Empty;
             var factory = new ConnectionFactory()
             {
                 HostName = "localhost",
@@ -31,18 +32,15 @@ namespace EventBus
                 consumer.Received += (model, ea) =>
                 {
                     var body = ea.Body.ToArray();
-                    var message = Encoding.UTF8.GetString(body);
+                    message = Encoding.UTF8.GetString(body);
 
-                    // DOLDUR BURALARI
-
-
-                    
                 };
                 channel.BasicConsume(queue: EventBusConstants.ReportQueue,
                                      autoAck: true,
-                                     consumer: consumer);         
+                                     consumer: consumer);
 
-            }
+                return message;
+            }        
         }
     }
 }

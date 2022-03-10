@@ -15,28 +15,18 @@ namespace Report.Aggregator.Controllers
 
         public ReportController(IReportService reportService, IContactService contactService)
         {
-
             _reportService = reportService ?? throw new ArgumentNullException(nameof(reportService));
             _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
-
         }
 
 
-        [HttpGet("GetReport", Name = "GetReport")]
+        [HttpGet("CreateContact", Name = "CreateContact")]
         public async Task<IActionResult> GetReport(string date)
         {
-            var report = await _reportService.GetReport(date);
+            var report = await _contactService.Create(date);
 
             return Ok(report);
         }
 
-
-        [HttpGet("GetContact", Name = "GetContact")]
-        public async Task<IActionResult> GetContact(ContactCreate contactCreate)
-        {
-            var contact = await _contactService.GetContact(contactCreate);
-
-            return Ok(contact);
-        }
     }
 }

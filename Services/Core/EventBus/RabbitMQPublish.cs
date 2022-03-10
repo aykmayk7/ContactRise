@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using Microsoft.Extensions.Configuration;
+using RabbitMQ.Client;
 using System;
 using System.Text;
 
@@ -18,6 +19,7 @@ namespace EventBus
                 ContinuationTimeout = new TimeSpan(10, 0, 0, 0)
             };
             using (var connection = factory.CreateConnection())
+
             using (var channel = connection.CreateModel())
             {
                 channel.QueueDeclare(queue: EventBusConstants.ReportQueue,

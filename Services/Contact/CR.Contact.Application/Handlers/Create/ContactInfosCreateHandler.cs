@@ -28,9 +28,9 @@ namespace CR.Contact.Application.Handlers.Create
             if (mapped == null)
                 return new ErrorApiResponse<ContactInfosResponse>(ResultMessage.NotCreatedContact);
 
-            var model = await _contactService.CreateContactInfo(mapped);
+            await _contactService.CreateContactInfo(mapped);
 
-            var response = _mapper.Map<ContactInfosResponse>(model);
+            var response = _mapper.Map<ContactInfosResponse>(mapped);
 
             return new SuccessApiResponse<ContactInfosResponse>(response);
         }
