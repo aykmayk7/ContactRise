@@ -11,8 +11,7 @@ namespace Report.Aggregator.ConsumerServices
     {
         //Masstransit Kullan
         private readonly IMediator _mediatr;
-        private readonly IContactService _contactService;
-        private readonly IReportService _reportService;  
+ 
         
         public ConsumerService(IMediator mediatr)
         {
@@ -21,10 +20,7 @@ namespace Report.Aggregator.ConsumerServices
 
         public async Task Consume(ConsumeContext<ContactCreate> context)
         {
-            var contact = _contactService.GetContact(context.Message);
-         
-
-            await _mediatr.Send(context);
+       
         }
     }
 }

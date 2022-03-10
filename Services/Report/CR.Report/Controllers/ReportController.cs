@@ -1,16 +1,11 @@
 ﻿using CR.Report.Application.Commands.Create;
 using CR.Report.Application.Queries.MultipleQuery;
 using CR.Report.Application.Queries.SingleQuery;
-using DotNetCore.CAP;
 using EventBus;
-using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RabbitMQ.Client;
 using System;
-using System.Text;
 using System.Threading.Tasks;
-using static CR.Core.Enumerations;
 
 namespace CR.Report.Controllers
 {
@@ -19,6 +14,8 @@ namespace CR.Report.Controllers
     public class ReportController : BaseController
     {
         private readonly IMediator _mediatr;
+        RabbitMQPublish<ReportCreate> MQ = new RabbitMQPublish<ReportCreate>();
+
         public ReportController(IMediator mediatr)
         {
             _mediatr = mediatr;
@@ -29,38 +26,12 @@ namespace CR.Report.Controllers
         {
             var result = await _mediatr.Send(command);
 
-            var factory = new ConnectionFactory()
-            {
-                HostName = "localhost",
-                Port = Protocols.DefaultProtocol.DefaultPort,
-                UserName = "guest",
-                Password = "guest",
-                VirtualHost = "/",
-                ContinuationTimeout = new TimeSpan(10, 0, 0, 0)
-            };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.QueueDeclare(queue: EventBusConstants.ReportQueue,
-                                     durable: false,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
+            if (result == null) return NotFound(result);
 
-                string message = "AYKAN CESUR";
-                var body = Encoding.UTF8.GetBytes(message);
+            MQ.SendMessage(command);
 
-                channel.BasicPublish(exchange: "",
-                                     routingKey: EventBusConstants.ReportQueue,
-                                     basicProperties: null,
-                                     body: body);
+            return result.Success ? Success(result) : BadRequest(result);
 
-
-
-                if (result == null) return NotFound(result);
-
-                return result.Success ? Success(result) : BadRequest(result);
-            }
         }
 
 
