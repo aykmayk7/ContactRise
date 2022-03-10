@@ -5,5 +5,6 @@ namespace EventBus.Interfaces
     public interface IRabbitMQConsume
     {
         Task<string> ConsumeMessage();
-    
+
+    }
 }

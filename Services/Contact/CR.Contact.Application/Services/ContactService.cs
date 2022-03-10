@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static CR.Core.Enumerations;
 
 namespace CR.Contact.Application.Services
 {
@@ -36,11 +37,11 @@ namespace CR.Contact.Application.Services
 
         }
 
-        public async Task<bool> DeleteContactInfo(string contactId, string key)
+        public async Task<bool> DeleteContactInfo(string contactId, ContactInfoEnum key)
         {
             FilterDefinition<ContactInfosCreate> filter = Builders<ContactInfosCreate>.Filter.And(
                 Builders<ContactInfosCreate>.Filter.Eq(p => p.ContactId, contactId),
-                Builders<ContactInfosCreate>.Filter.Eq(p => p.Key.ToString(), key));
+                Builders<ContactInfosCreate>.Filter.Eq(p => p.Info, key));
 
             DeleteResult deleteResult = await _context.ContactInfos.DeleteOneAsync(filter);
 
@@ -65,6 +66,11 @@ namespace CR.Contact.Application.Services
         public async Task<IEnumerable<ContactInfosCreate>> GetContactInfo(Guid contactId)
         {
             return await _context.ContactInfos.Find(p => p.ContactId == contactId.ToString()).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ContactWithInfoCreate>> GetAllContactInfo()
+        {
+            return await _context.ContactWithInfo.Find(p => true).ToListAsync();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static CR.Core.Enumerations;
 
 namespace CR.Contact.Application.Services.Interfaces
 {
@@ -10,10 +11,11 @@ namespace CR.Contact.Application.Services.Interfaces
         Task CreateContact(ContactCreate Contact);
         Task CreateContactInfo(ContactInfosCreate ContactInfos);
         Task<bool> DeleteContact(Guid id);
-        Task<bool> DeleteContactInfo(string contactId, string key);
+        Task<bool> DeleteContactInfo(string contactId, ContactInfoEnum key);
         Task<IEnumerable<ContactCreate>> GetAllContacts();
         Task<ContactWithInfoCreate> GetContactWithInfo(Guid contactId);
         Task<ContactCreate> GetContact(Guid Id);
         Task<IEnumerable<ContactInfosCreate>> GetContactInfo(Guid contactId);
+        Task<IEnumerable<ContactWithInfoCreate>> GetAllContactInfo();
     }
 }

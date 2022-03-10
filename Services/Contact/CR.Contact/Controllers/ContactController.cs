@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using static CR.Core.Enumerations;
 
 namespace CR.Contact.Controllers
 {
@@ -53,7 +54,7 @@ namespace CR.Contact.Controllers
 
 
         [HttpDelete("DeleteContactInfo")]
-        public async Task<IActionResult> DeleteContactInfo(string id, string key)
+        public async Task<IActionResult> DeleteContactInfo(string id, ContactInfoEnum key)
         {
             var query = new ContactInfosDelete(id, key);
 

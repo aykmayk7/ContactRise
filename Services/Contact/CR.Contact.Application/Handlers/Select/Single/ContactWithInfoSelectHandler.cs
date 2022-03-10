@@ -22,6 +22,7 @@ namespace CR.Contact.Application.Handlers.Select.Single
 
         public async Task<ApiResponse<ContactWithInfoCreate>> Handle(ContactWithInfoQuery request, CancellationToken cancellationToken)
         {
+            if (request == null) return null;
 
             var model1 = await _contactService.GetContact(request.Id);
             var model2 = await _contactService.GetContactInfo(request.Id);
