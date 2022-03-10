@@ -10,5 +10,7 @@ namespace Report.Aggregator.Services.Interfaces
 
         Task<IEnumerable<ReportInfoCreate>> GetReportInfo(string date);
 
+        Task<bool> UpdateReport(ReportCreate reportCreate);
+
     }
 }

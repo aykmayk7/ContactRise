@@ -1,7 +1,10 @@
-﻿using DotNetCore.CAP;
+﻿using CR.Core;
+using DotNetCore.CAP;
 using EventBus.Interfaces;
 using MediatR;
+using Report.Aggregator.Models;
 using Report.Aggregator.Services.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Report.Aggregator.ConsumerServices
@@ -32,6 +35,14 @@ namespace Report.Aggregator.ConsumerServices
 
             if (data == null && data == "") return;
 
+            var reportCreate = data.DeserializeObject<ReportCreate>();
+
+            var updateStatus = await _reportService.UpdateReport(reportCreate);
+
+            var contacts = await _contactService.GetAllContacts();
+
+
+           
 
         }
     }

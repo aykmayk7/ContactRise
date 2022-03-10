@@ -2,6 +2,7 @@
 using CR.Core.Responses;
 using MediatR;
 using System;
+using static CR.Core.Enumerations;
 
 namespace CR.Contact.Application.Commands.Create
 {
@@ -11,7 +12,7 @@ namespace CR.Contact.Application.Commands.Create
 
         public string ContactId { get; set; }
 
-        public string Key { get; set; }
+        public ContactInfoEnum Info { get; set; }
 
         public string Value { get; set; }
 

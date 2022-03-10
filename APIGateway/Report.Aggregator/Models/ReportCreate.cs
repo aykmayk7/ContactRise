@@ -10,7 +10,7 @@ namespace Report.Aggregator.Models
             this.ReportDate = DateTime.Now.ToString("yyyy-MM-dd");
         }
 
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string ReportDate { get; set; }
         public string ReportTarget { get; set; }
         public ReportStatusEnum ReportStatus { get; set; }

@@ -17,7 +17,7 @@ namespace Report.Aggregator.Services
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
-       
+
         public async Task<ReportCreate> GetReport(string date)
         {
             var response = await _client.GetAsync($"/api/v1/Report/GetReport?date={ date }");
@@ -36,5 +36,16 @@ namespace Report.Aggregator.Services
             return report.Data;
         }
 
+        public async Task<bool> UpdateReport(ReportCreate reportCreate)
+        {
+            string json = JsonConvert.SerializeObject(reportCreate);
+            StringContent httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync($"/api/v1/Report/ReportUpdate/", httpContent);
+
+            var report = await response.ReadContentAs<ApiResponse<ReportCreate>>();
+
+            return report.Success;
+        }
     }
 }

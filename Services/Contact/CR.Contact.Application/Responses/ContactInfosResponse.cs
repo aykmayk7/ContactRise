@@ -1,7 +1,5 @@
-﻿using CR.Contact.Application.Commands.Create;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System.Collections.Generic;
+﻿using CR.Core;
+using static CR.Core.Enumerations;
 
 namespace CR.Contact.Application.Responses
 {
@@ -10,7 +8,9 @@ namespace CR.Contact.Application.Responses
 
         public string ContactId { get; set; }
 
-        public string Key { get; set; }
+        public ContactInfoEnum Info { get; set; }
+
+        public string InfoName { get { return Enumerations.GetEnumDescription(Info); } }
 
         public string Value { get; set; }
 

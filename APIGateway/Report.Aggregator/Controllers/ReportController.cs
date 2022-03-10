@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Report.Aggregator.Models;
 using Report.Aggregator.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
@@ -27,6 +28,14 @@ namespace Report.Aggregator.Controllers
         public async Task<IActionResult> GetReportInfo(string date)
         {
             var report = await _reportService.GetReportInfo(date);
+
+            return Ok(report);
+        }  
+        
+        [HttpGet("ReportUpdate", Name = "ReportUpdate")]
+        public async Task<IActionResult> ReportUpdate(ReportCreate reportCreate)
+        {
+            var report = await _reportService.UpdateReport(reportCreate);
 
             return Ok(report);
         }
