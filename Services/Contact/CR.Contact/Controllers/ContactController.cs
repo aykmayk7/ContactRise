@@ -77,8 +77,8 @@ namespace CR.Contact.Controllers
             return result.Success ? Success(result) : BadRequest(result);
         }
 
-        [HttpGet("GetContactInfo")]
-        public async Task<IActionResult> GetContactInfos(Guid id)
+        [HttpGet("GetContactWithInfo")]
+        public async Task<IActionResult> GetContactWithInfo(Guid id)
         {
             var query = new ContactWithInfoQuery(id);
 

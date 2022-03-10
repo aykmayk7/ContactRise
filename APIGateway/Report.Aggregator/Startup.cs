@@ -42,19 +42,17 @@ namespace Report.Aggregator
 
             services.AddTransient<LoggingDelegatingHandler>();
 
-            services.AddHttpClient<IReportService, ReportService>(c =>
-               c.BaseAddress = new Uri(Configuration["ApiSettings:ReportUrl"]))
-              .AddHttpMessageHandler<LoggingDelegatingHandler>()
-              .AddPolicyHandler(GetRetryPolicy())
-              .AddPolicyHandler(GetCircuitBreakerPolicy());
-
-
             services.AddHttpClient<IContactService, ContactService>(c =>
                c.BaseAddress = new Uri(Configuration["ApiSettings:ContactUrl"]))
-              .AddHttpMessageHandler<LoggingDelegatingHandler>()
+              //.AddHttpMessageHandler<LoggingDelegatingHandler>()
               .AddPolicyHandler(GetRetryPolicy())
               .AddPolicyHandler(GetCircuitBreakerPolicy());
 
+            services.AddHttpClient<IReportService, ReportService>(c =>
+               c.BaseAddress = new Uri(Configuration["ApiSettings:ReportUrl"]))
+              //.AddHttpMessageHandler<LoggingDelegatingHandler>()
+              .AddPolicyHandler(GetRetryPolicy())
+              .AddPolicyHandler(GetCircuitBreakerPolicy());
            
 
             services.AddControllers();

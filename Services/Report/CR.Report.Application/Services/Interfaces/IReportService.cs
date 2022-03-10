@@ -8,9 +8,11 @@ namespace CR.Report.Application.Services.Interfaces
     public interface IReportService
     {
         Task CreateReport(ReportCreate Contact);
-        Task<ReportCreate> GetReport(DateTime date);
+        Task<ReportCreate> GetReport(string date);
         Task<IEnumerable<ReportCreate>> GetAllReport();
         Task CreateReportInfo(ReportInfoCreate Contact);
+        Task<ReportInfoCreate> GetReportInfo(string Date);
+        Task<bool> UpdateReport(ReportCreate reportCreate);
 
     }
 }

@@ -1,13 +1,15 @@
-﻿using RabbitMQ.Client;
+﻿using EventBus.Interfaces;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EventBus
 {
-    public class RabbitMQConsume
+    public class RabbitMQConsume : IRabbitMQConsume
     {
-        public string ConsumeMessage()
+        public async Task<string> ConsumeMessage()
         {
             string message = string.Empty;
             var factory = new ConnectionFactory()

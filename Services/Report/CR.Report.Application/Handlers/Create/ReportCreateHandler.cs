@@ -29,7 +29,7 @@ namespace CR.Report.Application.Handlers.Create
 
             if (mapped == null)
                 return new ErrorApiResponse<ReportResponse>(ResultMessage.NotCreatedReport);
-
+           
             await _reportService.CreateReport(mapped);
 
             var model = mapped;

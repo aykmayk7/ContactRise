@@ -11,7 +11,7 @@ namespace CR.Report.Application.Commands.Create
  
         public Guid Id { get; set; }
 
-        public DateTime ReportDate { get; set; }
+        public string ReportDate { get; set; }
 
         public string ReportTarget { get; set; }
 

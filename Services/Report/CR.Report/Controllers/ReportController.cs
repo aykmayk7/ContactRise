@@ -1,10 +1,10 @@
 ﻿using CR.Report.Application.Commands.Create;
+using CR.Report.Application.Commands.Update;
 using CR.Report.Application.Queries.MultipleQuery;
 using CR.Report.Application.Queries.SingleQuery;
-using EventBus;
+using EventBus.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace CR.Report.Controllers
@@ -14,11 +14,12 @@ namespace CR.Report.Controllers
     public class ReportController : BaseController
     {
         private readonly IMediator _mediatr;
-        RabbitMQPublish<ReportCreate> MQ = new RabbitMQPublish<ReportCreate>();
+        private readonly IRabbitMQPublish<ReportCreate> _rabbitMQPublish;
 
-        public ReportController(IMediator mediatr)
+        public ReportController(IMediator mediatr, IRabbitMQPublish<ReportCreate> rabbitMQPublish)
         {
             _mediatr = mediatr;
+            _rabbitMQPublish = rabbitMQPublish;
         }
 
         [HttpPost("CreateReport")]
@@ -28,7 +29,7 @@ namespace CR.Report.Controllers
 
             if (result == null) return NotFound(result);
 
-            MQ.SendMessage(command);
+            await _rabbitMQPublish.SendMessage(command);
 
             return result.Success ? Success(result) : BadRequest(result);
 
@@ -48,7 +49,7 @@ namespace CR.Report.Controllers
         }
 
         [HttpGet("GetReport")]
-        public async Task<IActionResult> GetReport(DateTime date)
+        public async Task<IActionResult> GetReport(string date)
         {
             var query = new ReportQuery(date);
 
@@ -59,5 +60,38 @@ namespace CR.Report.Controllers
             return result.Success ? Success(result) : BadRequest(result);
         }
 
+        [HttpPost("CreateReportInfo")]
+        public async Task<IActionResult> CreateReportInfo([FromBody] ReportInfoCreate command)
+        {
+            var result = await _mediatr.Send(command);
+
+            if (result == null) return NotFound(result);
+
+            return result.Success ? Success(result) : BadRequest(result);
+
+        }
+
+
+        [HttpGet("GetReportInfo")]
+        public async Task<IActionResult> GetReportInfo(string date)
+        {
+            var query = new ReportInfoQuery(date);
+
+            var result = await _mediatr.Send(query);
+
+            if (result == null) return NotFound();
+
+            return result.Success ? Success(result) : BadRequest(result);
+        }
+
+        [HttpPut("ReportUpdate")]
+        public async Task<IActionResult> ReportUpdate([FromBody] ReportUpdate reportCreate)
+        {
+            var result = await _mediatr.Send(reportCreate);
+
+            if (result == null) NotFound(result);
+ 
+            return result.Success ? Success(result) : BadRequest(result);
+        }
     }
 }

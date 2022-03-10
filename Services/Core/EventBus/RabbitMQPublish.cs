@@ -1,13 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EventBus.Interfaces;
 using RabbitMQ.Client;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EventBus
 {
-    public class RabbitMQPublish<T>
+    public class RabbitMQPublish<T> : IRabbitMQPublish<T>
     {
-        public void SendMessage(T Model)
+        public async Task SendMessage(T Model)
         {
             var factory = new ConnectionFactory()
             {
