@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Polly;
 using Polly.Extensions.Http;
+using Report.Aggregator.ConsumerServices;
 using Report.Aggregator.Services;
 using Report.Aggregator.Services.Interfaces;
 using System;
@@ -37,18 +38,25 @@ namespace Report.Aggregator
             });
 
 
-            //services.AddHealthChecksUI().AddInMemoryStorage();
+            services.AddHealthChecksUI().AddInMemoryStorage();
 
             services.AddTransient<LoggingDelegatingHandler>();
 
             services.AddHttpClient<IReportService, ReportService>(c =>
-               c.BaseAddress = new Uri(Configuration["ApiSettings:AuthUrl"]))
-              //.AddHttpMessageHandler<LoggingDelegatingHandler>()
+               c.BaseAddress = new Uri(Configuration["ApiSettings:ReportUrl"]))
+              .AddHttpMessageHandler<LoggingDelegatingHandler>()
               .AddPolicyHandler(GetRetryPolicy())
               .AddPolicyHandler(GetCircuitBreakerPolicy());
 
 
-            services.AddLogging();
+            services.AddHttpClient<IContactService, ContactService>(c =>
+               c.BaseAddress = new Uri(Configuration["ApiSettings:ContactUrl"]))
+              .AddHttpMessageHandler<LoggingDelegatingHandler>()
+              .AddPolicyHandler(GetRetryPolicy())
+              .AddPolicyHandler(GetCircuitBreakerPolicy());
+
+           
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>

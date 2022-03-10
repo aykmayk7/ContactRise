@@ -1,9 +1,9 @@
 ﻿using CR.Core.Responses;
 using CR.Report.Application.Responses;
 using MediatR;
-using static CR.Core.Enumerations;
+using System;
 
 namespace CR.Report.Application.Queries.SingleQuery
 {
-    public record ReportQuery(string date) : IRequest<ApiResponse<ReportResponse>>;
+    public record ReportQuery(DateTime Date) : IRequest<ApiResponse<ReportResponse>>;
 }

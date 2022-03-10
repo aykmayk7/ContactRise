@@ -14,7 +14,8 @@ namespace Report.Aggregator.Services
         public ReportService(HttpClient client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
-        }
+        } 
+
         public async Task<ReportCreate> GetReport(string date)
         {
             var response = await _client.GetAsync($"/api/v1/Report/GetReportInfos?date={ date }");

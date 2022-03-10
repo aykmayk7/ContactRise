@@ -1,10 +1,14 @@
 ﻿using CR.Report.Application.Commands.Create;
 using CR.Report.Application.Queries.MultipleQuery;
 using CR.Report.Application.Queries.SingleQuery;
+using DotNetCore.CAP;
+using EventBus;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RabbitMQ.Client;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using static CR.Core.Enumerations;
 
@@ -15,11 +19,9 @@ namespace CR.Report.Controllers
     public class ReportController : BaseController
     {
         private readonly IMediator _mediatr;
-        private readonly IPublishEndpoint _publishEndpoint;
-        public ReportController(IMediator mediatr, IPublishEndpoint publishEndpoint)
+        public ReportController(IMediator mediatr)
         {
             _mediatr = mediatr;
-            _publishEndpoint = publishEndpoint;
         }
 
         [HttpPost("CreateReport")]
@@ -27,11 +29,38 @@ namespace CR.Report.Controllers
         {
             var result = await _mediatr.Send(command);
 
-            if (result == null) return NotFound(result);
+            var factory = new ConnectionFactory()
+            {
+                HostName = "localhost",
+                Port = Protocols.DefaultProtocol.DefaultPort,
+                UserName = "guest",
+                Password = "guest",
+                VirtualHost = "/",
+                ContinuationTimeout = new TimeSpan(10, 0, 0, 0)
+            };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                channel.QueueDeclare(queue: EventBusConstants.ReportQueue,
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
 
-            await _publishEndpoint.Publish<ReportCreate>(command);
+                string message = "AYKAN CESUR";
+                var body = Encoding.UTF8.GetBytes(message);
 
-            return result.Success ? Success(result) : BadRequest(result);
+                channel.BasicPublish(exchange: "",
+                                     routingKey: EventBusConstants.ReportQueue,
+                                     basicProperties: null,
+                                     body: body);
+
+
+
+                if (result == null) return NotFound(result);
+
+                return result.Success ? Success(result) : BadRequest(result);
+            }
         }
 
 
@@ -48,7 +77,7 @@ namespace CR.Report.Controllers
         }
 
         [HttpGet("GetReportInfos")]
-        public async Task<IActionResult> GetReport(string date)
+        public async Task<IActionResult> GetReport(DateTime date)
         {
             var query = new ReportQuery(date);
 

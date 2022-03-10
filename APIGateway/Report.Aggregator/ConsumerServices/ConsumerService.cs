@@ -1,40 +1,30 @@
-﻿using CR.Core;
-using DotNetCore.CAP;
+﻿using DotNetCore.CAP;
+using MassTransit;
 using MediatR;
 using Report.Aggregator.Models;
+using Report.Aggregator.Services.Interfaces;
 using System.Threading.Tasks;
 
 namespace Report.Aggregator.ConsumerServices
 {
     public class ConsumerService : ICapSubscribe
     {
+        //Masstransit Kullan
         private readonly IMediator _mediatr;
-        private readonly ICapPublisher _capPublisher;
+        private readonly IContactService _contactService;
+        private readonly IReportService _reportService;  
         
-        public ConsumerService(IMediator mediatr, ICapPublisher capPublisher)
+        public ConsumerService(IMediator mediatr)
         {
-            _mediatr = mediatr;
-            _capPublisher = capPublisher;
+            _mediatr = mediatr;    
         }
 
-        [CapSubscribe("report-queue")]
-        public async Task ReportConsume(string value)
+        public async Task Consume(ConsumeContext<ContactCreate> context)
         {
-            var command = value.DeserializeObject<QueueService<ContactResponse>>().Data;
+            var contact = _contactService.GetContact(context.Message);
+         
 
-            var response = await _mediatr.Send(command);
-
-            // Kuyruklara Sipariş bilgisini gönderiyoruz.
-            if (response.Success && response.Data != null)
-            {
-                await _capPublisher.PublishAsync("report-queue", value);
-            }
-            else
-            {
-                await _capPublisher.PublishAsync("payment.fail.event", value);
-            }
+            await _mediatr.Send(context);
         }
-
     }
-
 }

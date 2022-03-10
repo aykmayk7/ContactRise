@@ -8,7 +8,7 @@ namespace CR.Contact.Application.Responses
     public class ContactInfosResponse : BaseResponse
     {
 
-        public int ContactId { get; set; }
+        public string ContactId { get; set; }
 
         public string Key { get; set; }
 

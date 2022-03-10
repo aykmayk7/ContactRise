@@ -8,6 +8,6 @@ namespace Report.Aggregator.Services.Interfaces
 {
     public interface IContactService
     {
-        Task<ContactResponse> GetContact(ReportCreate reportCreate);
+        Task<ContactCreate> GetContact(ContactCreate reportCreate);
     }
 }

@@ -60,7 +60,7 @@ namespace CR.Contact.Application.Services
 
         public async Task<ContactInfosCreate> GetContactWithInfo(string id)
         {
-            return await _context.ContactInfos.Find(p => p.ContactId.ToString() == id).FirstOrDefaultAsync();
+            return await _context.ContactInfos.Find(p => p.Id == id).FirstOrDefaultAsync();
             throw new NotImplementedException();
         }
     }

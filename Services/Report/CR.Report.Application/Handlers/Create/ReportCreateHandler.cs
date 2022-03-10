@@ -14,11 +14,12 @@ namespace CR.Report.Application.Handlers.Create
     {
 
         private readonly IMapper _mapper;
-        private readonly IReportService _ReportService;
+        private readonly IReportService _reportService;
 
-        public ReportCreateHandler(IMapper mapper, IReportService ReportService)
+
+        public ReportCreateHandler(IMapper mapper, IReportService reportService)
         {
-            _ReportService = ReportService;
+            _reportService = reportService;
             _mapper = mapper;
         }
 
@@ -29,7 +30,9 @@ namespace CR.Report.Application.Handlers.Create
             if (mapped == null)
                 return new ErrorApiResponse<ReportResponse>(ResultMessage.NotCreatedReport);
 
-            var model = await _ReportService.CreateReport(mapped);
+            await _reportService.CreateReport(mapped);
+
+            var model = mapped;
 
             var response = _mapper.Map<ReportResponse>(model);
 

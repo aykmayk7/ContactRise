@@ -49,6 +49,7 @@ namespace CR.Report
                     cfg.UseHealthCheck(ctx);
                 });
             });
+
             services.AddMassTransitHostedService();
 
             services.AddCors();
