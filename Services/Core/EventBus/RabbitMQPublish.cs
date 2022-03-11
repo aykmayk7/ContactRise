@@ -1,4 +1,5 @@
 ﻿using EventBus.Interfaces;
+using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using System;
 using System.Text;
@@ -8,14 +9,20 @@ namespace EventBus
 {
     public class RabbitMQPublish<T> : IRabbitMQPublish<T>
     {
+        private IConfiguration _configuration;
+
+        public RabbitMQPublish(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public async Task SendMessage(T Model)
         {
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
+                HostName = _configuration.GetSection("EventBus:HostName").Value,
                 Port = Protocols.DefaultProtocol.DefaultPort,
-                UserName = "guest",
-                Password = "guest",
+                UserName = _configuration.GetSection("EventBus:UserName").Value,
+                Password = _configuration.GetSection("EventBus:Password").Value,
                 VirtualHost = "/",
                 ContinuationTimeout = new TimeSpan(10, 0, 0, 0)
             };

@@ -1,4 +1,5 @@
 using CR.Core;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -53,7 +54,9 @@ namespace Report.Aggregator
               //.AddHttpMessageHandler<LoggingDelegatingHandler>()
               .AddPolicyHandler(GetRetryPolicy())
               .AddPolicyHandler(GetCircuitBreakerPolicy());
-           
+
+            services.AddTransient<Consume>();
+            services.AddMediatR(typeof(Program));
 
             services.AddControllers();
 
