@@ -27,7 +27,7 @@ namespace Report.Aggregator.Controllers
         [HttpGet("GetAllReports", Name = "GetAllReports")]
         public async Task<IActionResult> GetAllReports()
         {
-            var report = await _reportService.GetAllReports();
+            var report = await _reportService.GetAllReports();           
 
             return Ok(report);
         }  
@@ -44,6 +44,14 @@ namespace Report.Aggregator.Controllers
         public async Task<IActionResult> CreateReport(ReportCreate reportCreate)
         {
             var report = await _reportService.CreateReport(reportCreate);
+
+            return Ok(report);
+        }
+
+        [HttpGet("GetReportInfo", Name = "GetReportInfo")]
+        public async Task<IActionResult> GetReportInfo()
+        {
+            var report = await _reportService.GetReportInfo();
 
             return Ok(report);
         }

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using static CR.Core.Enumerations;
 
 namespace Report.Aggregator.Services
 {
@@ -41,15 +42,6 @@ namespace Report.Aggregator.Services
             return report.Data;
         }
 
-        public async Task<ContactWithInfoCreate> GetContactWithInfo(ContactWithInfoCreate contactWithInfoCreate)
-        {
-            var response = await _client.GetAsync($"/api/v1/Contact/CreateContactInfo?id={ contactWithInfoCreate.Id }");
-
-            var report = await response.ReadContentAs<ApiResponse<ContactWithInfoCreate>>();
-
-            return report.Data;
-        }
-
         public async Task<bool> DeleteContact(Guid Id)
         {
             var response = await _client.DeleteAsync($"/api/v1/Contact/DeleteContact?id={ Id }");
@@ -59,22 +51,13 @@ namespace Report.Aggregator.Services
             return report.Success;
         }
 
-        public async Task<bool> DeleteContactInfo(Guid ContactId, string Key)
+        public async Task<bool> DeleteContactInfo(ContactInfoEnum Key)
         {
-            var response = await _client.DeleteAsync($"/api/v1/Contact/DeleteContactInfo?id={ ContactId }&key={Key}");
+            var response = await _client.DeleteAsync($"/api/v1/Contact/DeleteContactInfo?key={Key}");
 
             var report = await response.ReadContentAs<ApiResponse<bool>>();
 
             return report.Success;
-        }
-
-        public async Task<ContactWithInfoCreate> CreateContactWithInfo(ContactWithInfoCreate contactWithInfoCreate)
-        {
-            var response = await _client.GetAsync($"/api/v1/Contact/CreateContactWithInfo/{ contactWithInfoCreate }");
-
-            var report = await response.ReadContentAs<ApiResponse<ContactWithInfoCreate>>();
-
-            return report.Data;
         }
 
         public async Task<IEnumerable<ContactCreate>> GetAllContacts()
@@ -86,11 +69,20 @@ namespace Report.Aggregator.Services
             return report.Data;
         }
 
-        public async Task<ContactWithInfoCreate> GetContactWithInfo(Guid Id)
+        public async Task<ContactCreate> GetContact(Guid Id)
         {
-            var response = await _client.GetAsync($"/api/v1/Contact/GetContactWithInfo?id={Id}");
+            var response = await _client.GetAsync($"/api/v1/Contact/GetContact?id={ Id }");
+            
+            var report = await response.ReadContentAs<ApiResponse<ContactCreate>>();
 
-            var report = await response.ReadContentAs<ApiResponse<ContactWithInfoCreate>>();
+            return report.Data;
+        }
+
+        public async Task<List<ContactByLocationCreate>> GetContactByLocation(string LocationName)
+        {
+            var response = await _client.GetAsync($"/api/v1/Contact/GetContactByLocation?locationname={ LocationName}");
+
+            var report = await response.ReadContentAs<ApiResponse<List<ContactByLocationCreate>>>();
 
             return report.Data;
         }

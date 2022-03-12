@@ -5,5 +5,5 @@ using System;
 
 namespace CR.Contact.Application.Commands.Delete
 {
-    public record ContactDelete(Guid Id) : IRequest<ApiResponse<ContactResponse>>;
+    public record ContactDelete(string Id) : IRequest<ApiResponse<bool>>;
 }

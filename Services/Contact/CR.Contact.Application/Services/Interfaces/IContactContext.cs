@@ -7,8 +7,8 @@ namespace CR.Contact.Application.Services.Interfaces
     public interface IContactContext
     {
         IMongoCollection<ContactResponse> Contacts { get; }
-        IMongoCollection<ContactInfosCreate> ContactInfos { get; }
-        IMongoCollection<ContactWithInfoCreate> ContactWithInfo { get; }
-
+        IMongoCollection<ContactInfosResponse> ContactInfos { get; }
+        IMongoCollection<ContactByLocationResponse> ContactByLocationResponse { get; }
+     
     }
 }

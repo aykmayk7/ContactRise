@@ -28,13 +28,13 @@ namespace Report.Aggregator.Services
             return report.Data;
         }
 
-        public async Task<ReportCreate> GetAllReports()
+        public async Task<IEnumerable<ReportCreate>> GetAllReports()
         {
             var response = await _client.GetAsync($"/api/v1/Report/GetAllReports");
-
+                
             var report = await response.ReadContentAs<ApiResponse<ReportCreate>>();
 
-            return report.Data;
+            return (IEnumerable<ReportCreate>)report.Data;
         }
 
         public async Task<bool> UpdateReport(ReportCreate reportCreate)
@@ -59,6 +59,15 @@ namespace Report.Aggregator.Services
             var report = await response.ReadContentAs<ApiResponse<ReportCreate>>();
 
             return report.Success;
+        }
+
+        public async Task<ReportInfoCreate> GetReportInfo()
+        {
+            var response = await _client.GetAsync($"/api/v1/Report/GetReportInfo");
+
+            var report = await response.ReadContentAs<ApiResponse<ReportInfoCreate>>();
+
+            return report.Data;
         }
     }
 }

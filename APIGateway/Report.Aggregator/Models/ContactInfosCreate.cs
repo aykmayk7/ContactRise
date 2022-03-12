@@ -1,4 +1,5 @@
 ﻿using System;
+using static CR.Core.Enumerations;
 
 namespace Report.Aggregator.Models
 {
@@ -6,9 +7,9 @@ namespace Report.Aggregator.Models
     {
         public Guid Id { get; set; }
 
-        public string ContactId { get; set; }
+        public Guid ContactId { get; set; }
 
-        public string Key { get; set; }
+        public ContactInfoEnum Info { get; set; }
 
         public string Value { get; set; }
 

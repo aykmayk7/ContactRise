@@ -23,7 +23,7 @@ namespace CR.Contact.Application.Handlers.Select.Multiple
 
         public async Task<ApiResponse<IEnumerable<ContactResponse>>> Handle(ContactsQuery request, CancellationToken cancellationToken)
         {
-            IEnumerable<ContactResponse> data = await _contactService.GetAllContacts();
+            var data = await _contactService.GetAllContacts();
 
             var response = _mapper.Map<IEnumerable<ContactResponse>>(data);
 

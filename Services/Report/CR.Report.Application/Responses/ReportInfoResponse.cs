@@ -1,12 +1,12 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace Report.Aggregator.Models
+namespace CR.Report.Application.Responses
 {
-    public class ReportInfoCreate
+    public class ReportInfoResponse : BaseResponse
     {
         [BsonElement("ReportId")]
-        public Guid ReportId { get; set; }
+        public Guid ReportId{ get; set; }
 
         [BsonElement("ReportName")]
         public string ReportName { get; set; }

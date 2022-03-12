@@ -13,7 +13,6 @@ namespace CR.Report.Application.Commands.Create
         //public BsonDateTime CompletedDate { get; set; }
         //public string ReportTarget { get; set; }
         //public ReportStatusEnum ReportStatus { get; set; }
-
         public string ReportName { get; set; }
 
     }

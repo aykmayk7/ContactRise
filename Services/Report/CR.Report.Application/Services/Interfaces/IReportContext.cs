@@ -7,6 +7,7 @@ namespace CR.Report.Application.Services.Interfaces
     public interface IReportContext 
     {
         IMongoCollection<ReportResponse> Reports { get; }
+        IMongoCollection<ReportInfoResponse> ReportInfo { get; }
         
 
     }

@@ -7,10 +7,9 @@ namespace CR.Report.Application.Responses
     {
         public BsonDateTime ReportDate { get; set; }
         public BsonDateTime CompletedDate { get; set; }
-        public string ReportTarget { get; set; }
-        public ReportStatusEnum ReportStatus { get; set; }
         public string ReportName { get; set; }
-
+        public ReportStatusEnum ReportStatus { get; set; }
+        public string ReportTarget { get; set; }
 
     }
 }

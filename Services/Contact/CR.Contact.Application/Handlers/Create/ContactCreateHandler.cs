@@ -25,15 +25,17 @@ namespace CR.Contact.Application.Handlers.Create
         public async Task<ApiResponse<ContactResponse>> Handle(ContactCreate request, CancellationToken cancellationToken)
         {
             var mapped = _mapper.Map<ContactResponse>(request);
-
+        
             if (mapped == null)
                 return new ErrorApiResponse<ContactResponse>(ResultMessage.NotCreatedContact);
 
+
             await _contactService.CreateContact(mapped);
 
-            //var response = _mapper.Map<ContactResponse>(mapped);
+            var response = _mapper.Map<ContactResponse>(mapped);
+            
 
-            return new SuccessApiResponse<ContactResponse>(mapped);
+            return new SuccessApiResponse<ContactResponse>(response);
         }
     }
 }

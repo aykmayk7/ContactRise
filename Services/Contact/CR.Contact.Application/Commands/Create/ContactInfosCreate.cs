@@ -6,9 +6,8 @@ using static CR.Core.Enumerations;
 
 namespace CR.Contact.Application.Commands.Create
 {
-    public class ContactInfosCreate : BaseResponse
+    public class ContactInfosCreate : IRequest<ApiResponse<ContactInfosResponse>>
     {
-        //public Guid ContactId { get { return ContactId; } set { ContactId = Id; } }
         public Guid ContactId { get; set; }
 
         public ContactInfoEnum Info { get; set; }
@@ -16,7 +15,6 @@ namespace CR.Contact.Application.Commands.Create
         public string Value { get; set; }
 
         public string Contents { get; set; }
-
-
+    
     }
 }

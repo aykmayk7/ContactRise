@@ -10,6 +10,7 @@ namespace CR.Report.Application.Mappers
         {
             CreateMap<ReportCreate, ReportCreate>().ReverseMap();
             CreateMap<ReportCreate, ReportResponse>().ReverseMap();
+            CreateMap<ReportInfoCreate, ReportInfoResponse>().ReverseMap();
 
         }
     }

@@ -83,5 +83,17 @@ namespace CR.Report.Controllers
 
             return result.Success ? Success(result) : BadRequest(result);
         }
+
+        [HttpGet("GetReportInfo")]
+        public async Task<IActionResult> GetReportInfo()
+        {
+            var query = new ReportInfoQuery();
+
+            var result = await _mediatr.Send(query);
+
+            if (result == null) return NotFound();
+
+            return result.Success ? Success(result) : BadRequest(result);
+        }
     }
 }

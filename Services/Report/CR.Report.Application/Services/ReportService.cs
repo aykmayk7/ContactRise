@@ -5,6 +5,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CR.Report.Application.Services
@@ -21,7 +22,7 @@ namespace CR.Report.Application.Services
         public async Task CreateReport(ReportResponse Report)
         {
             await _context.Reports.InsertOneAsync(Report);
-        }       
+        }
 
         public async Task<IEnumerable<ReportResponse>> GetAllReport()
         {
@@ -33,7 +34,12 @@ namespace CR.Report.Application.Services
         {
             return await _context.Reports.Find(p => p.Id == Id).FirstOrDefaultAsync();
         }
-   
+
+        public async Task<ReportInfoResponse> GetReportInfo()
+        {
+            return await _context.ReportInfo.Find(p => true).FirstOrDefaultAsync();
+        }
+
         public async Task<bool> UpdateReport(ReportResponse reportCreate)
         {
             var updateResult = await _context

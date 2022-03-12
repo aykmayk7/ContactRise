@@ -2,24 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static CR.Core.Enumerations;
 
 namespace Report.Aggregator.Services.Interfaces
 {
     public interface IContactService
     {
-        Task<ContactCreate> CreateContact(ContactCreate reportCreate);
+        Task<ContactCreate> CreateContact(ContactCreate Contact);
 
-        Task<bool> DeleteContact(Guid Id);
+        Task<bool> DeleteContact(Guid id);
 
-        Task<ContactInfosCreate> CreateContactInfo(ContactInfosCreate reportCreate);
-
-        Task<bool> DeleteContactInfo(Guid ContactId, string Key);
-
-        Task<ContactWithInfoCreate> GetContactWithInfo(Guid Id);
-
-        Task<ContactWithInfoCreate> CreateContactWithInfo(ContactWithInfoCreate reportCreate);
+        Task<bool> DeleteContactInfo(ContactInfoEnum key);
 
         Task<IEnumerable<ContactCreate>> GetAllContacts();
 
+        Task<ContactCreate> GetContact(Guid Id);
+
+        Task<ContactInfosCreate> CreateContactInfo(ContactInfosCreate Contact);
+
+        Task<List<ContactByLocationCreate>> GetContactByLocation(string LocationName);
     }
 }

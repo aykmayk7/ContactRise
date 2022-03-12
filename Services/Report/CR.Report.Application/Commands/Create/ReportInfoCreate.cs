@@ -1,9 +1,12 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using CR.Core.Responses;
+using CR.Report.Application.Responses;
+using MediatR;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace Report.Aggregator.Models
+namespace CR.Report.Application.Commands.Create
 {
-    public class ReportInfoCreate
+    public class ReportInfoCreate : IRequest<ApiResponse<ReportResponse>>
     {
         [BsonElement("ReportId")]
         public Guid ReportId { get; set; }

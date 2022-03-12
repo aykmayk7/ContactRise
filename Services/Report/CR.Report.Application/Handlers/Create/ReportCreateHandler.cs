@@ -27,8 +27,7 @@ namespace CR.Report.Application.Handlers.Create
 
         public async Task<ApiResponse<ReportResponse>> Handle(ReportCreate request, CancellationToken cancellationToken)
         {
-            var mapped = _mapper.Map<ReportResponse>(request);
-            
+            var mapped = _mapper.Map<ReportResponse>(request);            
             mapped.ReportDate = DateTime.Now;
             mapped.ReportName = request.ReportName;
             mapped.ReportStatus = Enumerations.ReportStatusEnum.NotReady;

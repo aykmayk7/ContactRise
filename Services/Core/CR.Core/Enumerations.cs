@@ -22,8 +22,9 @@ namespace CR.Core
 
         public enum ReportStatusEnum
         {
-            [Description("Hazırlanıyor")] NotReady = 0,
-            [Description("Tamamlandı")] Ready = 1
+            [Description("Bekliyor")] NotReady = 0,
+            [Description("Hazırlanıyor")] Processing = 1,
+            [Description("Tamamlandı")] Ready = 2
         }
 
         public enum ContactInfoEnum

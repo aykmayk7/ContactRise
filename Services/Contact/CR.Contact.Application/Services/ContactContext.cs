@@ -13,16 +13,15 @@ namespace CR.Contact.Application.Services
             var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
                        
-
             Contacts = database.GetCollection<ContactResponse>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
-            ContactInfos = database.GetCollection<ContactInfosCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName2"));
-            ContactWithInfo = database.GetCollection<ContactWithInfoCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
+            ContactInfos = database.GetCollection<ContactInfosResponse>(configuration.GetValue<string>("DatabaseSettings:CollectionName2"));
+            ContactByLocationResponse = database.GetCollection<ContactByLocationResponse>(configuration.GetValue<string>("DatabaseSettings:CollectionName2"));           
             
         }
         public IMongoCollection<ContactResponse> Contacts { get; }
 
-        public IMongoCollection<ContactInfosCreate> ContactInfos { get; }
+        public IMongoCollection<ContactInfosResponse> ContactInfos { get; }
+        public IMongoCollection<ContactByLocationResponse> ContactByLocationResponse { get; }
 
-        public IMongoCollection<ContactWithInfoCreate> ContactWithInfo { get; }
     }
 }

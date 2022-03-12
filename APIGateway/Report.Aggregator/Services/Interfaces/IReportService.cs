@@ -1,4 +1,5 @@
 ﻿using Report.Aggregator.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Report.Aggregator.Services.Interfaces
@@ -7,8 +8,8 @@ namespace Report.Aggregator.Services.Interfaces
     {
         Task<ReportCreate> GetReport(string Id);
         Task<bool> CreateReport(ReportCreate reportCreate);
-        Task<ReportCreate> GetAllReports();
+        Task<IEnumerable<ReportCreate>> GetAllReports();
         Task<bool> UpdateReport(ReportCreate reportCreate);
-
+        Task<ReportInfoCreate> GetReportInfo();
     }
 }

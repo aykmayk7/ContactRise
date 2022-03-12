@@ -4,6 +4,7 @@ using Report.Aggregator.Models;
 using Report.Aggregator.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
+using static CR.Core.Enumerations;
 
 namespace Contact.Aggregator.Controllers
 {
@@ -42,9 +43,9 @@ namespace Contact.Aggregator.Controllers
         }
 
         [HttpDelete("DeleteContactInfo", Name = "DeleteContactInfo")]
-        public async Task<IActionResult> DeleteContactInfo(Guid Id, string key)
+        public async Task<IActionResult> DeleteContactInfo(ContactInfoEnum key)
         {
-            var report = await _contactService.DeleteContactInfo(Id, key);
+            var report = await _contactService.DeleteContactInfo(key);
 
             return Ok(report);
         }
@@ -57,12 +58,21 @@ namespace Contact.Aggregator.Controllers
             return Ok(report);
         }
 
-        [HttpGet("GetContactWithInfo", Name = "GetContactWithInfo")]
-        public async Task<IActionResult> GetContactWithInfo(Guid Id)
+        [HttpGet("GetContact", Name = "GetContact")]
+        public async Task<IActionResult> GetContact(Guid Id)
         {
-            var report = await _contactService.GetContactWithInfo(Id);
+            var report = await _contactService.GetContact(Id);
 
             return Ok(report);
         }
+        
+        [HttpGet("GetContactByLocation", Name = "GetContactByLocation")]
+        public async Task<IActionResult> GetContactByLocation(string LocationName)
+        {
+            var report = await _contactService.GetContactByLocation(LocationName);
+
+            return Ok(report);
+        }
+
     }
 }

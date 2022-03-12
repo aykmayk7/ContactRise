@@ -9,13 +9,21 @@ namespace CR.Contact.Application.Services.Interfaces
 {
     public interface IContactService
     {
-        Task<ContactResponse> CreateContact(ContactCreate Contact);
-        Task<bool> DeleteContact(Guid id);
-        Task<bool> DeleteContactInfo(Guid contactId, ContactInfoEnum key);
+
+        Task CreateContact(ContactResponse Contact);
+
+        Task<bool> DeleteContact(string id);
+
+        Task<bool> DeleteContactInfo(ContactInfoEnum key);
+
         Task<IEnumerable<ContactResponse>> GetAllContacts();
-        Task<ContactWithInfoCreate> GetContactWithInfo(Guid contactId);
+
         Task<ContactResponse> GetContact(Guid Id);
-        Task<IEnumerable<ContactInfosCreate>> GetContactInfo(Guid contactId);
-        Task<IEnumerable<ContactWithInfoCreate>> GetAllContactInfo();
+
+        Task CreateContactInfo(ContactInfosResponse Contact);
+
+        Task<List<ContactByLocationResponse>> GetContactByLocation(string LocationName);
+
+
     }
 }

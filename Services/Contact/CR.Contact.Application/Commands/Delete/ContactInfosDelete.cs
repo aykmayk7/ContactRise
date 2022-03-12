@@ -5,5 +5,5 @@ using static CR.Core.Enumerations;
 
 namespace CR.Contact.Application.Commands.Delete
 {
-    public record ContactInfosDelete(Guid id, ContactInfoEnum key) : IRequest<ApiResponse>;
+    public record ContactInfosDelete(ContactInfoEnum key) : IRequest<ApiResponse<bool>>;
 }

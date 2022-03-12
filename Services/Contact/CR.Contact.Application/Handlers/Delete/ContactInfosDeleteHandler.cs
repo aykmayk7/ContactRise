@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CR.ContactInfosInfos.Application.Handlers.Delete
 {
-    public class ContactInfosDeleteHandler : IRequestHandler<ContactInfosDelete, ApiResponse>
+    public class ContactInfosDeleteHandler : IRequestHandler<ContactInfosDelete, ApiResponse<bool>>
     {
         private readonly IContactService _contactService;
         public ContactInfosDeleteHandler(IContactService contactService)
@@ -16,16 +16,16 @@ namespace CR.ContactInfosInfos.Application.Handlers.Delete
             _contactService = contactService;
         }
 
-        public async Task<ApiResponse> Handle(ContactInfosDelete request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<bool>> Handle(ContactInfosDelete request, CancellationToken cancellationToken)
         {
-            var mapped = await _contactService.DeleteContactInfo(request.id, request.key);
+            var mapped = await _contactService.DeleteContactInfo(request.key);
 
             if (mapped == false)
-                return new ErrorApiResponse(ResultMessage.NotDeletedContact);
+                return new ErrorApiResponse<bool>(ResultMessage.NotDeletedContact);
 
-            await _contactService.DeleteContactInfo(request.id, request.key);
+            await _contactService.DeleteContactInfo(request.key);
 
-            return new SuccessApiResponse();
+            return new SuccessApiResponse<bool>(true);
 
         }
     }
