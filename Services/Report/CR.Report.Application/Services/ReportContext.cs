@@ -13,8 +13,9 @@ namespace CR.Report.Application.Services
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
 
             Reports = database.GetCollection<ReportResponse>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
-            ReportInfo = database.GetCollection<ReportInfoResponse>(configuration.GetValue<string>("DatabaseSettings:CollectionName2"));            
-
+            ReportInfo = database.GetCollection<ReportInfoResponse>(configuration.GetValue<string>("DatabaseSettings:CollectionName2"));
+           
+            ReportInfo.InsertManyAsync(ReportContextSeed.GetPreconfiguredReportTypePrms());
         }
         public IMongoCollection<ReportResponse> Reports { get; }
         public IMongoCollection<ReportInfoResponse> ReportInfo { get; }

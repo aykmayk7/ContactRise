@@ -8,8 +8,6 @@ namespace CR.Report.Application.Commands.Create
 {
     public class ReportInfoCreate : IRequest<ApiResponse<ReportResponse>>
     {
-        [BsonElement("ReportId")]
-        public Guid ReportId { get; set; }
 
         [BsonElement("ReportName")]
         public string ReportName { get; set; }

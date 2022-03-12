@@ -60,7 +60,6 @@ namespace Report.Aggregator
             // MassTransit-RabbitMQ Configuration
             services.AddMassTransit(config =>
             {
-
                 config.AddConsumer<ConsumerService>();
 
                 config.UsingRabbitMq((ctx, cfg) =>
@@ -85,8 +84,6 @@ namespace Report.Aggregator
                     queueCapacity = 100;
                 return new DefaultBackgroundTaskQueue(queueCapacity);
             });
-
-
 
             services.AddHealthChecksUI().AddInMemoryStorage();
 

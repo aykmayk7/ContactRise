@@ -13,4 +13,10 @@
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\CR.Core\CR.Core.csproj" />
+    <ProjectReference Include="..\CR.Report.Application\CR.Report.Application.csproj" />
+    <ProjectReference Include="..\CR.Report\CR.Report.csproj" />
+  </ItemGroup>
+
 </Project>
