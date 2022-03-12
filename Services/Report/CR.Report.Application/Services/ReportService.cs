@@ -1,5 +1,7 @@
 ﻿using CR.Report.Application.Commands.Create;
+using CR.Report.Application.Responses;
 using CR.Report.Application.Services.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -15,33 +17,24 @@ namespace CR.Report.Application.Services
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task CreateReport(ReportCreate Report)
+
+        public async Task CreateReport(ReportResponse Report)
         {
             await _context.Reports.InsertOneAsync(Report);
-        }
+        }       
 
-        public async Task CreateReportInfo(ReportInfoCreate reportInfo)
-        {
-            await _context.ReportInfo.InsertOneAsync(reportInfo);
-        }
-
-        public async Task<IEnumerable<ReportCreate>> GetAllReport()
+        public async Task<IEnumerable<ReportResponse>> GetAllReport()
         {
             var durum = await _context.Reports.Find(p => true).ToListAsync();
-            return (IEnumerable<ReportCreate>)durum;
+            return (IEnumerable<ReportResponse>)durum;
         }
 
-        public async Task<ReportCreate> GetReport(string date)
+        public async Task<ReportResponse> GetReport(string Id)
         {
-            return await _context.Reports.Find(p => p.ReportDate == date).FirstOrDefaultAsync();
+            return await _context.Reports.Find(p => p.Id == Id).FirstOrDefaultAsync();
         }
-
-        public async Task<ReportInfoCreate> GetReportInfo(string Date)
-        {
-            return await _context.ReportInfo.Find(p => p.CreatedTime == Date).FirstOrDefaultAsync();
-        }
-
-        public async Task<bool> UpdateReport(ReportCreate reportCreate)
+   
+        public async Task<bool> UpdateReport(ReportResponse reportCreate)
         {
             var updateResult = await _context
                                       .Reports

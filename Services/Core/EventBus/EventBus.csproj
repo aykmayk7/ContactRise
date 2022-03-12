@@ -13,4 +13,8 @@
     <ProjectReference Include="..\CR.Core\CR.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,4 @@
 using CR.Core;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,25 +37,41 @@ namespace Report.Aggregator
                 opt.SerializerSettings.Culture = System.Globalization.CultureInfo.GetCultureInfo("tr-TR");
             });
 
+            services.AddCap(options =>
+            {
+                options.UseDashboard(o => o.PathMatch = "/cap-dashboard");
+                options.UseMongoDB(Configuration["DatabaseSettings:ConnectionString"]);
+                options.UseRabbitMQ(options =>
+                {
+                    options.ConnectionFactoryOptions = options =>
+                    {
+                        options.Ssl.Enabled = false;
+                        options.HostName = Configuration["EventBus:HostName"];
+                        options.UserName = Configuration["EventBus:UserName"];
+                        options.Password = Configuration["EventBus:Password"];
+                        options.Port = int.Parse(Configuration["EventBus:Port"]);
+                    };
+                });
+            });
 
             services.AddHealthChecksUI().AddInMemoryStorage();
 
             services.AddTransient<LoggingDelegatingHandler>();
 
             services.AddHttpClient<IContactService, ContactService>(c =>
-               c.BaseAddress = new Uri(Configuration["ApiSettings:ContactUrl"]))
-              //.AddHttpMessageHandler<LoggingDelegatingHandler>()
-              .AddPolicyHandler(GetRetryPolicy())
-              .AddPolicyHandler(GetCircuitBreakerPolicy());
+               c.BaseAddress = new Uri(Configuration["ApiSettings:ContactUrl"]));
+            //.AddHttpMessageHandler<LoggingDelegatingHandler>()
+            //.AddPolicyHandler(GetRetryPolicy())
+            //.AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IReportService, ReportService>(c =>
-               c.BaseAddress = new Uri(Configuration["ApiSettings:ReportUrl"]))
-              //.AddHttpMessageHandler<LoggingDelegatingHandler>()
-              .AddPolicyHandler(GetRetryPolicy())
-              .AddPolicyHandler(GetCircuitBreakerPolicy());
+               c.BaseAddress = new Uri(Configuration["ApiSettings:ReportUrl"]));
+            //.AddHttpMessageHandler<LoggingDelegatingHandler>()
+            //.AddPolicyHandler(GetRetryPolicy())
+            //.AddPolicyHandler(GetCircuitBreakerPolicy());
 
-            services.AddTransient<Consume>();
-            services.AddMediatR(typeof(Program));
+            
+            services.AddTransient<ConsumerService>();
 
             services.AddControllers();
 

@@ -22,7 +22,7 @@ namespace CR.Report.Application.Handlers.Select.Single
 
         public async Task<ApiResponse<ReportResponse>> Handle(ReportQuery request, CancellationToken cancellationToken)
         {
-            var model = await _reportService.GetReport(request.Date);
+            var model = await _reportService.GetReport(request.Id);
 
             var response = _mapper.Map<ReportResponse>(model);
 

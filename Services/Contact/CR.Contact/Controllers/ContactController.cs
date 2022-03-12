@@ -42,19 +42,19 @@ namespace CR.Contact.Controllers
             return result.Success ? Success(result) : BadRequest(result);
         }
 
-        [HttpPost("CreateContactInfo")]
-        public async Task<IActionResult> CreateContactInfo([FromBody] ContactInfosCreate command)
-        {
-            var result = await _mediatr.Send(command);
+        //[HttpPost("CreateContactInfo")]
+        //public async Task<IActionResult> CreateContactInfo([FromBody] ContactInfosCreate command)
+        //{
+        //    var result = await _mediatr.Send(command);
 
-            if (result == null) return NotFound(result);
+        //    if (result == null) return NotFound(result);
 
-            return result.Success ? Success(result) : BadRequest(result);
-        }
+        //    return result.Success ? Success(result) : BadRequest(result);
+        //}
 
 
         [HttpDelete("DeleteContactInfo")]
-        public async Task<IActionResult> DeleteContactInfo(string id, ContactInfoEnum key)
+        public async Task<IActionResult> DeleteContactInfo(Guid id, ContactInfoEnum key)
         {
             var query = new ContactInfosDelete(id, key);
 

@@ -76,6 +76,7 @@ namespace Report.Aggregator.Services
 
             return report.Data;
         }
+
         public async Task<IEnumerable<ContactCreate>> GetAllContacts()
         {
             var response = await _client.GetAsync($"/api/v1/Contact/GetAllContacts");

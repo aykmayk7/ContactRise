@@ -1,4 +1,6 @@
 ﻿using CR.Contact.Application.Commands.Create;
+using CR.Contact.Application.Commands.Delete;
+using CR.Contact.Application.Responses;
 using CR.Contact.Application.Services.Interfaces;
 using MongoDB.Driver;
 using System;
@@ -16,28 +18,29 @@ namespace CR.Contact.Application.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task CreateContact(ContactCreate Contact)
+        public async Task<ContactResponse> CreateContact(ContactCreate Contact)
         {
-            await _context.Contacts.InsertOneAsync(Contact);
+            await _context.Contacts.InsertManyAsync(Contact);
+            return Contact;
         }
 
-        public async Task CreateContactInfo(ContactInfosCreate ContactInfos)
-        {
-            await _context.ContactInfos.InsertOneAsync(ContactInfos);
-        }
+        //public async Task CreateContactInfo(ContactInfosCreate ContactInfos)
+        //{
+        //    await _context.ContactInfos.InsertOneAsync(ContactInfos);
+        //}
 
         public async Task<bool> DeleteContact(Guid id)
         {
-            FilterDefinition<ContactCreate> filter = Builders<ContactCreate>.Filter.Eq(p => p.Id, id);
+            FilterDefinition<ContactResponse> filter = Builders<ContactResponse>.Filter.Eq(p => p.Id, id);
 
-            DeleteResult deleteResult = await _context.Contacts.DeleteOneAsync(filter);
+            DeleteResult deleteResult = await _context.Contacts.DeleteOneAsync(filter, default);
 
             return deleteResult.IsAcknowledged
                 && deleteResult.DeletedCount > 0;
 
         }
 
-        public async Task<bool> DeleteContactInfo(string contactId, ContactInfoEnum key)
+        public async Task<bool> DeleteContactInfo(Guid contactId, ContactInfoEnum key)
         {
             FilterDefinition<ContactInfosCreate> filter = Builders<ContactInfosCreate>.Filter.And(
                 Builders<ContactInfosCreate>.Filter.Eq(p => p.ContactId, contactId),
@@ -50,7 +53,7 @@ namespace CR.Contact.Application.Services
 
         }
 
-        public async Task<IEnumerable<ContactCreate>> GetAllContacts()
+        public async Task<IEnumerable<ContactResponse>> GetAllContacts()
         {
             return await _context.Contacts.Find(p => true).ToListAsync();
         }
@@ -59,13 +62,15 @@ namespace CR.Contact.Application.Services
         {
             return await _context.ContactWithInfo.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
-        public async Task<ContactCreate> GetContact(Guid id)
+
+        public async Task<ContactResponse> GetContact(Guid id)
         {
             return await _context.Contacts.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
+
         public async Task<IEnumerable<ContactInfosCreate>> GetContactInfo(Guid contactId)
         {
-            return await _context.ContactInfos.Find(p => p.ContactId == contactId.ToString()).ToListAsync();
+            return await _context.ContactInfos.Find(p => p.ContactId == contactId).ToListAsync();
         }
 
         public async Task<IEnumerable<ContactWithInfoCreate>> GetAllContactInfo()

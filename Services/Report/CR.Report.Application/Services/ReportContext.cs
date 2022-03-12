@@ -1,4 +1,5 @@
 ﻿using CR.Report.Application.Commands.Create;
+using CR.Report.Application.Responses;
 using CR.Report.Application.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
@@ -12,12 +13,11 @@ namespace CR.Report.Application.Services
             var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
 
-            Reports = database.GetCollection<ReportCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
-            ReportInfo = database.GetCollection<ReportInfoCreate>(configuration.GetValue<string>("DatabaseSettings:CollectionName2"));            
+            Reports = database.GetCollection<ReportResponse>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));            
 
         }
-        public IMongoCollection<ReportCreate> Reports { get; }
-        public IMongoCollection<ReportInfoCreate> ReportInfo { get; }
+        public IMongoCollection<ReportResponse> Reports { get; }
+        
                
     }
 }

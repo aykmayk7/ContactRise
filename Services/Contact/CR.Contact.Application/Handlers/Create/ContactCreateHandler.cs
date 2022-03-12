@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CR.Contact.Application.Handlers.Create
 {
-    public class ContactCreateHandler : IRequestHandler<ContactCreate, ApiResponse<ContactCreate>>
+    public class ContactCreateHandler : IRequestHandler<ContactCreate, ApiResponse<ContactResponse>>
     {
 
         private readonly IMapper _mapper;
@@ -22,18 +22,18 @@ namespace CR.Contact.Application.Handlers.Create
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse<ContactCreate>> Handle(ContactCreate request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<ContactResponse>> Handle(ContactCreate request, CancellationToken cancellationToken)
         {
-            var mapped = _mapper.Map<ContactCreate>(request);
+            var mapped = _mapper.Map<ContactResponse>(request);
 
             if (mapped == null)
-                return new ErrorApiResponse<ContactCreate>(ResultMessage.NotCreatedContact);
+                return new ErrorApiResponse<ContactResponse>(ResultMessage.NotCreatedContact);
 
             await _contactService.CreateContact(mapped);
 
-            var response = _mapper.Map<ContactCreate>(mapped);
+            //var response = _mapper.Map<ContactResponse>(mapped);
 
-            return new SuccessApiResponse<ContactCreate>(response);
+            return new SuccessApiResponse<ContactResponse>(mapped);
         }
     }
 }

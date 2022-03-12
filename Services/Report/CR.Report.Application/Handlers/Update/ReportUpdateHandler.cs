@@ -3,6 +3,7 @@ using CR.Core.Responses;
 using CR.Report.Application.Commands.Create;
 using CR.Report.Application.Commands.Update;
 using CR.Report.Application.Helpers;
+using CR.Report.Application.Responses;
 using CR.Report.Application.Services.Interfaces;
 using MediatR;
 using System.Threading;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CR.Report.Application.Handlers.Update
 {
-    public class ReportUpdateHandler : IRequestHandler<ReportUpdate, ApiResponse<ReportCreate>>
+    public class ReportUpdateHandler : IRequestHandler<ReportUpdate, ApiResponse<ReportResponse>>
     {
         private readonly IReportService _ReportService;
         private readonly IMapper _mapper;
@@ -21,18 +22,18 @@ namespace CR.Report.Application.Handlers.Update
 
         }
 
-        public async Task<ApiResponse<ReportCreate>> Handle(ReportUpdate request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<ReportResponse>> Handle(ReportUpdate request, CancellationToken cancellationToken)
         {
-            var mapped = _mapper.Map<ReportCreate>(request);
+            var mapped = _mapper.Map<ReportResponse>(request);
 
             if (mapped == null)
-                return new ErrorApiResponse<ReportCreate>(ResultMessage.NotUpdatedReport);
+                return new ErrorApiResponse<ReportResponse>(ResultMessage.NotUpdatedReport);
 
             var model = await _ReportService.UpdateReport(mapped);
 
-            var response = _mapper.Map<ReportCreate>(mapped);
+            var response = _mapper.Map<ReportResponse>(mapped);
 
-            return new SuccessApiResponse<ReportCreate>(response);
+            return new SuccessApiResponse<ReportResponse>(response);
         }
     }
 }

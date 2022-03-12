@@ -10,29 +10,29 @@ using System.Threading.Tasks;
 
 namespace CR.Contact.Application.Handlers.Create
 {
-    public class ContactInfosCreateHandler : IRequestHandler<ContactInfosCreate, ApiResponse<ContactInfosResponse>>
-    {
-        private readonly IContactService _contactService;
-        private readonly IMapper _mapper;
+    //public class ContactInfosCreateHandler : IRequestHandler<ContactInfosCreate, ApiResponse<ContactInfosResponse>>
+    //{
+    //    private readonly IContactService _contactService;
+    //    private readonly IMapper _mapper;
 
-        public ContactInfosCreateHandler(IContactService contactService, IMapper mapper)
-        {
-            _contactService = contactService;
-            _mapper = mapper;
-        }
+    //    public ContactInfosCreateHandler(IContactService contactService, IMapper mapper)
+    //    {
+    //        _contactService = contactService;
+    //        _mapper = mapper;
+    //    }
 
-        public async Task<ApiResponse<ContactInfosResponse>> Handle(ContactInfosCreate request, CancellationToken cancellationToken)
-        {
-            var mapped = _mapper.Map<ContactInfosCreate>(request);
+    //    public async Task<ApiResponse<ContactInfosResponse>> Handle(ContactInfosCreate request, CancellationToken cancellationToken)
+    //    {
+    //        var mapped = _mapper.Map<ContactInfosCreate>(request);
 
-            if (mapped == null)
-                return new ErrorApiResponse<ContactInfosResponse>(ResultMessage.NotCreatedContact);
+    //        if (mapped == null)
+    //            return new ErrorApiResponse<ContactInfosResponse>(ResultMessage.NotCreatedContact);
 
-            await _contactService.CreateContactInfo(mapped);
+    //        //await _contactService.CreateContactInfo(mapped);
 
-            var response = _mapper.Map<ContactInfosResponse>(mapped);
+    //        var response = _mapper.Map<ContactInfosResponse>(mapped);
 
-            return new SuccessApiResponse<ContactInfosResponse>(response);
-        }
-    }
+    //        return new SuccessApiResponse<ContactInfosResponse>(response);
+    //    }
+    //}
 }

@@ -41,16 +41,38 @@ namespace CR.Report
                 opt.SerializerSettings.Culture = System.Globalization.CultureInfo.GetCultureInfo("tr-TR");
             });
 
-            services.AddMassTransit(config =>
+
+            services.AddCap(options =>
             {
-                config.UsingRabbitMq((ctx, cfg) =>
+                options.UseDashboard(o => o.PathMatch = "/cap-dashboard");
+                options.UseMongoDB(Configuration["DatabaseSettings:ConnectionString"]);
+                options.UseRabbitMQ(options =>
                 {
-                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
-                    cfg.UseHealthCheck(ctx);
+                    options.ConnectionFactoryOptions = options =>
+                    {
+                        options.Ssl.Enabled = false;
+                        options.HostName = Configuration["EventBus:HostName"];
+                        options.UserName = Configuration["EventBus:UserName"];
+                        options.Password = Configuration["EventBus:Password"];
+                        options.Port = int.Parse(Configuration["EventBus:Port"]);
+                    };
                 });
             });
 
+            services.AddMassTransit(config => {
+
+                //config.AddConsumer<ReportBackgroundServiceConsumer>();
+
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+
+                    //cfg.ReceiveEndpoint(EventBusConstants.ReportBackgroundServiceQueue, c => {
+                    //    c.ConfigureConsumer<ReportBackgroundServiceConsumer>(ctx);
+                    //});
+                });
+            });
             services.AddMassTransitHostedService();
+
 
             services.AddCors();
 

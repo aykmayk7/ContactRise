@@ -24,18 +24,26 @@ namespace Report.Aggregator.Controllers
             return Ok(report);
         }
 
-        [HttpGet("GetReportInfo", Name = "GetReportInfo")]
-        public async Task<IActionResult> GetReportInfo(string date)
+        [HttpGet("GetAllReports", Name = "GetAllReports")]
+        public async Task<IActionResult> GetAllReports()
         {
-            var report = await _reportService.GetReportInfo(date);
+            var report = await _reportService.GetAllReports();
 
             return Ok(report);
         }  
         
-        [HttpGet("ReportUpdate", Name = "ReportUpdate")]
-        public async Task<IActionResult> ReportUpdate(ReportCreate reportCreate)
+        [HttpPut("UpdateReport", Name = "UpdateReport")]
+        public async Task<IActionResult> UpdateReport(ReportCreate reportCreate)
         {
             var report = await _reportService.UpdateReport(reportCreate);
+
+            return Ok(report);
+        }
+
+        [HttpPost("CreateReport", Name = "CreateReport")]
+        public async Task<IActionResult> CreateReport(ReportCreate reportCreate)
+        {
+            var report = await _reportService.CreateReport(reportCreate);
 
             return Ok(report);
         }

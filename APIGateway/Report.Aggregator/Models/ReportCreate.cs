@@ -1,19 +1,20 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using static CR.Core.Enumerations;
 
 namespace Report.Aggregator.Models
 {
-    public class ReportCreate 
+    public class ReportCreate
     {
-        public ReportCreate()
-        {
-            this.ReportDate = DateTime.Now.ToString("yyyy-MM-dd");
-        }
-
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public Guid Id { get; set; }
-        public string ReportDate { get; set; }
+        public BsonDateTime ReportDate { get; set; }
+        public BsonDateTime CompletedDate { get; set; }
         public string ReportTarget { get; set; }
         public ReportStatusEnum ReportStatus { get; set; }
+        public string ReportName { get; set; }
 
 
     }
