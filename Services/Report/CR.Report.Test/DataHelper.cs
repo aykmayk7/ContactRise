@@ -23,7 +23,7 @@ namespace CR.Report.Test
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
-        public class UpdateReportClassData : IEnumerable<object[]>
+        public class UpdateReportObj : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
             {

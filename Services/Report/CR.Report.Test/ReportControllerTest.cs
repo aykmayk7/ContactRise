@@ -1,5 +1,7 @@
+using CR.Report.Application.Commands.Create;
 using CR.Report.Controllers;
-using NUnit.Framework;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace CR.Report.Test
 {
@@ -7,9 +9,19 @@ namespace CR.Report.Test
     {
         private readonly ReportController _reportController;
 
-        public ReportControllerTest()
+
+        [Fact]
+        public async Task ReportController_ActionExecutes_ReturnsViewForList()
         {
-            //_reportController = ConfigHelper.GetReportController();
+            var result = await _reportController.GetAllReports();
+
+        }
+
+        public async Task ReportController_ActionExecutes_ReturnsViewForCreateReport(ReportCreate reportCreate)
+        {
+
+            var result = await _reportController.CreateReport(reportCreate);
+
         }
     }
 }
