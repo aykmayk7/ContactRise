@@ -19,17 +19,12 @@ namespace Report.Aggregator.ConsumerServices
         private readonly IContactService _contactService;
         private readonly IReportService _reportService;
 
-        public ConsumerService(
-            IMapper mapper,
-            IBackgroundTaskQueue taskQueue,
-            IContactService contactService,
-            IReportService reportService)
+        public ConsumerService(IMapper mapper, IBackgroundTaskQueue taskQueue, IContactService contactService, IReportService reportService)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _taskQueue = taskQueue ?? throw new ArgumentNullException(nameof(taskQueue));
             _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
             _reportService = reportService ?? throw new ArgumentNullException(nameof(reportService));
-  
         }
 
         public async Task Consume(ConsumeContext<ReportCreate> context)
@@ -55,10 +50,10 @@ namespace Report.Aggregator.ConsumerServices
             var excelModel = _mapper.Map<List<ExcelModel>>(result.Result);
 
             string fileName = $"{reportInfo.ReportName}_{DateTime.Now.ToString("dd_MM_yyyy_HHmmss")}";
-            string path = reportInfo.SavePath;            
+            string path = reportInfo.SavePath;
             byte[] filecontent = ExcelExportHelper.ExportExcel(excelModel, fileName, true);
             filecontent.SaveToExcel(path, fileName, out fileName);
-            
+
             reportEntity.CompletedDate = DateTime.Now;
             reportEntity.ReportTarget = fileName;
             reportEntity.ReportStatus = ReportStatusEnum.Ready;

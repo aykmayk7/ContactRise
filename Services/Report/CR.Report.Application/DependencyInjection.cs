@@ -25,6 +25,7 @@ namespace CR.Report.Application
 
             services.AddScoped<IReportContext, ReportContext>();
             services.AddScoped<IReportService, ReportService>();
+            
 
             #region Configure Mapper
             var config = new MapperConfiguration(cfg =>

@@ -32,30 +32,18 @@ namespace Report.Aggregator
         }
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Startup));
+
             services.AddControllersWithViews().AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 opt.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
                 opt.SerializerSettings.Culture = System.Globalization.CultureInfo.GetCultureInfo("tr-TR");
-            });
-
-            services.AddCap(options =>
-            {
-                options.UseDashboard(o => o.PathMatch = "/cap-dashboard");
-                options.UseMongoDB(Configuration["DatabaseSettings:ConnectionString"]);
-                options.UseRabbitMQ(options =>
-                {
-                    options.ConnectionFactoryOptions = options =>
-                    {
-                        options.Ssl.Enabled = false;
-                        options.HostName = Configuration["EventBus:HostName"];
-                        options.UserName = Configuration["EventBus:UserName"];
-                        options.Password = Configuration["EventBus:Password"];
-                        options.Port = int.Parse(Configuration["EventBus:Port"]);
-                    };
-                });
-            });
+            });        
 
             // MassTransit-RabbitMQ Configuration
             services.AddMassTransit(config =>
@@ -74,7 +62,7 @@ namespace Report.Aggregator
             });
             services.AddMassTransitHostedService();
 
-            services.AddScoped<ConsumerService>();
+            services.AddTransient<ConsumerService>();
 
             services.AddHostedService<QueuedHostedService>();
 
@@ -87,22 +75,20 @@ namespace Report.Aggregator
 
             services.AddHealthChecksUI().AddInMemoryStorage();
 
-            services.AddTransient<LoggingDelegatingHandler>();
+            //services.AddTransient<LoggingDelegatingHandler>();
 
             services.AddHttpClient<IContactService, ContactService>(c =>
                c.BaseAddress = new Uri(Configuration["ApiSettings:ContactUrl"]));
-            //.AddHttpMessageHandler<LoggingDelegatingHandler>()
+            //.AddHttpMessageHandler<LoggingDelegatingHandler>();
             //.AddPolicyHandler(GetRetryPolicy())
             //.AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IReportService, ReportService>(c =>
                c.BaseAddress = new Uri(Configuration["ApiSettings:ReportUrl"]));
-            //.AddHttpMessageHandler<LoggingDelegatingHandler>()
+            //.AddHttpMessageHandler<LoggingDelegatingHandler>();
             //.AddPolicyHandler(GetRetryPolicy())
             //.AddPolicyHandler(GetCircuitBreakerPolicy());
 
-
-            services.AddTransient<ConsumerService>();
 
             services.AddControllers();
 
