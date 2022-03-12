@@ -19,4 +19,4 @@ The communication of Microservices was done over HTTPClient.
 - Contact MicroService = https://localhost:44308/swagger
 - REST Service = https://localhost:44385/swagger
 - RabbitMQ =  https://localhost:5672
-- MongoDB =  "mongodb://localhost:27017" '' ReportDb && ContactDb ''
+- MongoDB =  mongodb://localhost:27017
