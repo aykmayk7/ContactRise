@@ -1,4 +1,5 @@
-﻿using CR.Core.Responses;
+﻿  
+using CR.Core.Responses;
 using Newtonsoft.Json;
 using Report.Aggregator.Extensions;
 using Report.Aggregator.Models;
@@ -31,7 +32,7 @@ namespace Report.Aggregator.Services
         public async Task<IEnumerable<ReportCreate>> GetAllReports()
         {
             var response = await _client.GetAsync($"/api/v1/Report/GetAllReports");
-                
+
             var report = await response.ReadContentAs<ApiResponse<ReportCreate>>();
 
             return (IEnumerable<ReportCreate>)report.Data;

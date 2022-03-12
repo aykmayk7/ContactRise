@@ -42,8 +42,8 @@ namespace Report.Aggregator.ConsumerServices
             var report = await _reportService.GetReport(reportEntity.Id);
             var reportInfo = await _reportService.GetReportInfo();
 
-            reportEntity.ReportStatus = ReportStatusEnum.Processing;
-            await _reportService.UpdateReport(reportEntity);
+            report.ReportStatus = ReportStatusEnum.Processing;
+            await _reportService.UpdateReport(report);
 
             var result = _contactService.GetContactByLocation(String.Empty);
 
@@ -54,10 +54,10 @@ namespace Report.Aggregator.ConsumerServices
             byte[] filecontent = ExcelExportHelper.ExportExcel(excelModel, fileName, true);
             filecontent.SaveToExcel(path, fileName, out fileName);
 
-            reportEntity.CompletedDate = DateTime.Now;
-            reportEntity.ReportTarget = fileName;
-            reportEntity.ReportStatus = ReportStatusEnum.Ready;
-            await _reportService.UpdateReport(reportEntity);
+            report.CompletedDate = DateTime.Now;
+            report.ReportTarget = fileName;
+            report.ReportStatus = ReportStatusEnum.Ready;
+            await _reportService.UpdateReport(report);
 
             await Task.Delay(TimeSpan.FromSeconds(5));
         }

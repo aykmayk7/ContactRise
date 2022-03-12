@@ -73,7 +73,6 @@ namespace CR.Report
             });
             services.AddMassTransitHostedService();
 
-
             services.AddCors();
 
             services.AddApplication();

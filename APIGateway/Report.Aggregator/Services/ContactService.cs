@@ -72,7 +72,7 @@ namespace Report.Aggregator.Services
         public async Task<ContactCreate> GetContact(Guid Id)
         {
             var response = await _client.GetAsync($"/api/v1/Contact/GetContact?id={ Id }");
-            
+
             var report = await response.ReadContentAs<ApiResponse<ContactCreate>>();
 
             return report.Data;

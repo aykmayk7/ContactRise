@@ -4,6 +4,6 @@
     {
         public string LocationName { get; set; }
         public int PersonCount { get; set; }
-        public int TelephoneCount { get; set; }        
+        public int TelephoneCount { get; set; }
     }
 }

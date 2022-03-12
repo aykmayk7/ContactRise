@@ -21,13 +21,22 @@ namespace CR.Report.Controllers
         private readonly IMediator _mediatr;
         private readonly ICapPublisher _capPublisher;
         private readonly IPublishEndpoint _publishEndpoint;
-
+        private IMediator mediatr;
+        private global::Moq.Mock<IPublishEndpoint> mockRabbit;
+        private global::Moq.Mock<ICapPublisher> mockPublisher;
 
         public ReportController(IMediator mediatr, IPublishEndpoint publishEndpoint, ICapPublisher capPublisher)
         {
             _mediatr = mediatr;
             _capPublisher = capPublisher;
             _publishEndpoint = publishEndpoint;
+        }
+
+        public ReportController(IMediator mediatr, global::Moq.Mock<IPublishEndpoint> mockRabbit, global::Moq.Mock<ICapPublisher> mockPublisher)
+        {
+            this.mediatr = mediatr;
+            this.mockRabbit = mockRabbit;
+            this.mockPublisher = mockPublisher;
         }
 
         [HttpPost("CreateReport")]

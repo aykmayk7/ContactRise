@@ -15,7 +15,7 @@ namespace Report.Aggregator.Controllers
             _reportService = reportService ?? throw new ArgumentNullException(nameof(reportService));
         }
 
- 
+
         [HttpGet("GetReport", Name = "GetReport")]
         public async Task<IActionResult> GetReport(string date)
         {
@@ -27,11 +27,11 @@ namespace Report.Aggregator.Controllers
         [HttpGet("GetAllReports", Name = "GetAllReports")]
         public async Task<IActionResult> GetAllReports()
         {
-            var report = await _reportService.GetAllReports();           
+            var report = await _reportService.GetAllReports();
 
             return Ok(report);
-        }  
-        
+        }
+
         [HttpPut("UpdateReport", Name = "UpdateReport")]
         public async Task<IActionResult> UpdateReport(ReportCreate reportCreate)
         {

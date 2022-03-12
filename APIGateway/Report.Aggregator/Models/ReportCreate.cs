@@ -13,8 +13,5 @@ namespace Report.Aggregator.Models
         public ReportStatusEnum ReportStatus { get; set; }
         public string ReportTarget { get; set; }
 
-
-
-
     }
 }

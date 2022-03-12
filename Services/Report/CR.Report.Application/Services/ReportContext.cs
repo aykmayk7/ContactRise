@@ -7,6 +7,8 @@ namespace CR.Report.Application.Services
 {
     public class ReportContext : IReportContext
     {
+
+
         public ReportContext(IConfiguration configuration)
         {
             var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
@@ -14,12 +16,12 @@ namespace CR.Report.Application.Services
 
             Reports = database.GetCollection<ReportResponse>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
             ReportInfo = database.GetCollection<ReportInfoResponse>(configuration.GetValue<string>("DatabaseSettings:CollectionName2"));
-           
+
             ReportInfo.InsertManyAsync(ReportContextSeed.GetPreconfiguredReportTypePrms());
         }
         public IMongoCollection<ReportResponse> Reports { get; }
         public IMongoCollection<ReportInfoResponse> ReportInfo { get; }
-        
-               
+
+
     }
 }

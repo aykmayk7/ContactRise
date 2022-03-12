@@ -65,7 +65,7 @@ namespace Contact.Aggregator.Controllers
 
             return Ok(report);
         }
-        
+
         [HttpGet("GetContactByLocation", Name = "GetContactByLocation")]
         public async Task<IActionResult> GetContactByLocation(string LocationName)
         {
