@@ -1,18 +1,19 @@
 
 # ContactRise #
-Worked with MongoDB. There is no migration, only data.
-The communication of Microservices was done over HTTPClient.
-
+- Worked with MongoDB. There is no migration, only data.
+- The communication of Microservices was done over HTTPClient.
+- 
 
 # Technologies #
 - .net Core 5.0
-- MongdoDB
+- MongoDB
 - RabbitMQ
 - AutoMapper
 - MediatR
 - CQRS
 - Microservices
 - DotNetCap
+- Git
 
 # Links #
 - Report MicroService = https://localhost:44307/swagger
