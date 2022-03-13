@@ -12,7 +12,6 @@
 - MediatR
 - CQRS
 - Microservices
-- DotNetCap
 - Git
 
 # Links #
