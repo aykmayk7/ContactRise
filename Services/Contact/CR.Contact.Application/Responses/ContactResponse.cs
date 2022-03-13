@@ -1,5 +1,4 @@
-﻿using CR.Contact.Application.Commands.Create;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CR.Contact.Application.Responses

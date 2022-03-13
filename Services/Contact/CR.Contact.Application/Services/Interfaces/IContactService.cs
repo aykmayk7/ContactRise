@@ -22,7 +22,7 @@ namespace CR.Contact.Application.Services.Interfaces
 
         Task CreateContactInfo(ContactInfosResponse Contact);
 
-        Task<List<ContactByLocationResponse>> GetContactByLocation(string LocationName);
+        Task<ContactByLocationResponse> GetContactByLocation(string LocationName);
 
 
     }

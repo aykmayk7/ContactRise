@@ -1,5 +1,4 @@
-﻿using CR.Core;
-using System;
+﻿using System;
 using static CR.Core.Enumerations;
 
 namespace CR.Contact.Application.Responses
@@ -14,7 +13,6 @@ namespace CR.Contact.Application.Responses
 
         public string Contents { get; set; }
 
-        public ContactResponse ContactResponse { get; set; }
 
     }
 }

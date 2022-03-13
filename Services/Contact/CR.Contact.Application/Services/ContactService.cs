@@ -1,8 +1,5 @@
-﻿using CR.Contact.Application.Commands.Create;
-using CR.Contact.Application.Commands.Delete;
-using CR.Contact.Application.Responses;
+﻿using CR.Contact.Application.Responses;
 using CR.Contact.Application.Services.Interfaces;
-using CR.Core;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -93,42 +90,30 @@ namespace CR.Contact.Application.Services
             await _context.ContactInfos.InsertOneAsync(Contact);
         }
 
-        public async Task<List<ContactByLocationResponse>> GetContactByLocation(string locationName)
+        public async Task<ContactByLocationResponse> GetContactByLocation(string locationName)
         {
-            //var report = (from contact in _context.ContactInfos.
-            //              where contact.Info == ContactInfoEnum.Location
-            //              group contact by new
-            //              {
-            //                  contact.Value
-            //              }
-            //              into contactGroup
-            //              select new ContactByLocationResponse
-            //              {
-            //                  LocationName = contactGroup.Key.Value,
-            //                  PersonCount = 0,
-            //                  TelephoneCount = 0
-            //                  //PersonCount = (from c in _context.Contacts.AsQueryable()
-            //                  //               where c.ContactId == contactGroup.Key.ContactId
-            //                  //               select c).Count()
+            ContactByLocationResponse a = new ContactByLocationResponse()
+            {
+                LocationName = locationName,
+                PersonCount = (from c in (from c in _context.ContactInfos.AsQueryable()
+                                          where c.Info == ContactInfoEnum.Location
+                                          select c)
+                               where c.Value == locationName
+                               select c).Count().ToString(),
 
-            //                  //TelephoneCount = (from c in (from c in _context.PersonContactInfos
-            //                  //                             where c.InfoType == ContactInfoType.Location
-            //                  //                             select c)
-            //                  //                  join d in (from d in _context.PersonContactInfos
-            //                  //                             where d.InfoType == ContactInfoType.PhoneNumber
-            //                  //                             select d) on c.PersonId equals d.PersonId
-            //                  //                  where c.InfoDetail == contactGroup.Key.InfoDetail
-            //                  //                  select d).Count()
-            //              }).Distinct();
+                TelephoneCount = (from c in (from c in _context.ContactInfos.AsQueryable()
+                                             where c.Info == ContactInfoEnum.Location
+                                             select c)
+                                  join d in (from d in _context.ContactInfos.AsQueryable()
+                                             where d.Info == ContactInfoEnum.Mobil
+                                             select d)
+                                             on c.ContactId equals d.ContactId
+                                  where c.Value == locationName
+                                  select d).Count().ToString()
+            };
 
-            //if (!string.IsNullOrWhiteSpace(locationName))
-            //    report = report.Where(d => d.LocationName == locationName);
+            return a;
 
-            return default;
-
-
-            //return report.ToList();
         }
     }
 }
-

@@ -3,8 +3,8 @@
     public class ContactByLocationResponse
     {
         public string LocationName { get; set; }
-        public int PersonCount { get; set; }
-        public int TelephoneCount { get; set; }
+        public string PersonCount { get; set; }
+        public string TelephoneCount { get; set; }
 
     }
 }
