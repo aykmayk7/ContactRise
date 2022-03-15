@@ -12,7 +12,6 @@
 - MediatR
 - CQRS
 - Microservices
-- Git
 
 # Links #
 - Report MicroService = https://localhost:44307/swagger
